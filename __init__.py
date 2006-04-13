@@ -28,17 +28,17 @@ from zope.annotation.interfaces import IAnnotations
 from zope.annotation.interfaces import IAnnotations
 from zope.lifecycleevent import ObjectCopiedEvent
 
+from zope.copypastemove.interfaces import IObjectMover
+from zope.copypastemove.interfaces import IObjectCopier
+from zope.copypastemove.interfaces import IContainerItemRenamer
+from zope.copypastemove.interfaces import IPrincipalClipboard
+from zope.copypastemove.interfaces import IItemNotFoundError
+
 from zope.app.container.sample import SampleContainer
 from zope.app.container.interfaces import IContainer, IOrderedContainer
 from zope.app.container.interfaces import IContained
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.constraints import checkObject
-
-from zope.app.copypastemove.interfaces import IObjectMover
-from zope.app.copypastemove.interfaces import IObjectCopier
-from zope.app.copypastemove.interfaces import IContainerItemRenamer
-from zope.app.copypastemove.interfaces import IPrincipalClipboard
-from zope.app.copypastemove.interfaces import IItemNotFoundError
 
 import warnings # BBB (remove in 3.3)
 

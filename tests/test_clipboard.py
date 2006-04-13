@@ -18,13 +18,12 @@ $Id$
 import unittest
 import zope.component
 from zope.annotation.interfaces import IAnnotations
+from zope.copypastemove.interfaces import IPrincipalClipboard
+from zope.copypastemove import PrincipalClipboard
 
 from zope.app.component.testing import PlacefulSetup
 from zope.app.principalannotation import PrincipalAnnotationUtility
 from zope.app.principalannotation.interfaces import IPrincipalAnnotationUtility
-
-from zope.app.copypastemove.interfaces import IPrincipalClipboard
-from zope.app.copypastemove import PrincipalClipboard
 
 class PrincipalStub(object):
 

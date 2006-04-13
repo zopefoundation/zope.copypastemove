@@ -29,7 +29,7 @@ def setUp(test):
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('zope.app.copypastemove',
+        DocTestSuite('zope.copypastemove',
                      setUp=setUp, tearDown=tearDownCA),
         ))
 
