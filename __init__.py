@@ -611,19 +611,6 @@ class PrincipalClipboard(object):
         return self.context.get('clipboard', ())
 
 
-def rename(container, oldid, newid):
-    """Renames an item with oldid in the container to newid.
-
-    This function is deprecated. Use IContainerItemRenamer instead.
-    """
-    # BBB (remove in 3.3)
-    warnings.warn(
-        "rename is deprecated and will not be supported starting in "
-        "Zope 3.3. Use IContainerItemRenamer(container).renameItem "
-        "instead.", DeprecationWarning)
-    IContainerItemRenamer(container).renameItem(oldid, newid)
-
-
 class ExampleContainer(SampleContainer):
     # Sample container used for examples in doc stringss in this module
 
