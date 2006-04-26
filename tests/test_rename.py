@@ -18,19 +18,20 @@ $Id$
 import unittest
 
 from zope.testing.doctestunit import DocTestSuite
-from zope.component.testing import setUp as setUpCA, tearDown as tearDownCA
+from zope.component import testing, eventtesting
 from zope.app.container.tests.placelesssetup import PlacelessSetup
 
 container_setup = PlacelessSetup()
 
 def setUp(test):
-    setUpCA()
+    testing.setUp()
+    eventtesting.setUp()
     container_setup.setUp()
 
 def test_suite():
     return unittest.TestSuite((
         DocTestSuite('zope.copypastemove',
-                     setUp=setUp, tearDown=tearDownCA),
+                     setUp=setUp, tearDown=testing.tearDown),
         ))
 
 if __name__=='__main__':
