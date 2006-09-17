@@ -40,8 +40,6 @@ from zope.app.container.interfaces import IContained
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.constraints import checkObject
 
-import warnings # BBB (remove in 3.3)
-
 class ItemNotFoundError(LookupError):
     implements(IItemNotFoundError)
 
@@ -404,23 +402,6 @@ class ObjectCopier(object):
 
         target[new_name] = copy
         return new_name
-
-    def _configureCopy(self, copy, target, new_name):
-        """Configures the copied object before it is added to `target`.
-
-        `target` and `new_name` are provided as additional information.
-
-        By default, `copy.__parent__` and `copy.__name__` are set to ``None``.
-
-        Subclasses may override this method to perform additional
-        configuration of the copied object.
-        """
-        # BBB (remove in 3.3)
-        warnings.warn(
-            "_configureCopy is deprecated -- to configure a recently copied"
-            "object, register a handler for IObjectCopiedEvent",
-            DeprecationWarning)
-        copy.__parent__ = copy.__name__ = None
 
     def copyable(self):
         """Returns True if the object is copyable, otherwise False."""
