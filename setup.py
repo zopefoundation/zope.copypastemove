@@ -18,13 +18,10 @@ $Id$
 
 import os
 
-try:
-    from setuptools import setup, Extension
-except ImportError, e:
-    from distutils.core import setup, Extension
+from setuptools import setup, find_packages
 
 setup(name='zope.copypastemove',
-      version='3.4-dev',
+      version='3.4dev',
       url='http://svn.zope.org/zope.copypastemove',
       license='ZPL 2.1',
       description='Zope copypastemove',
@@ -32,9 +29,7 @@ setup(name='zope.copypastemove',
       author_email='zope3-dev@zope.org',
       long_description="Copy, Paste and Move support for content components.",
 
-      packages=['zope',
-                'zope.copypastemove',
-                'zope.copypastemove.tests'],
+      packages=find_packages('src'),
       package_dir = {'': 'src'},
 
       namespace_packages=['zope',],
