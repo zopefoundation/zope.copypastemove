@@ -20,7 +20,7 @@ import os
 
 from setuptools import setup, find_packages
 
-setup(name='zope.copypastemove',
+setup(name='zope.copypastremove',
       version='3.4dev',
       url='http://svn.zope.org/zope.copypastemove',
       license='ZPL 2.1',
