@@ -15,26 +15,31 @@
 
 $Id$
 """
-
 import os
-
 from setuptools import setup, find_packages
 
+long_description = (open('README.txt').read() +
+                    '\n\n' +
+                    open('CHANGES.txt').read())
+
 setup(name='zope.copypastemove',
-      version = '3.4.0b1',
-      url='http://svn.zope.org/zope.copypastemove',
+      version = '3.4.0',
+      url='http://pypi.python.org/pypi/zope.copypastemove',
       license='ZPL 2.1',
-      description='Zope copypastemove',
       author='Zope Corporation and Contributors',
       author_email='zope3-dev@zope.org',
-      long_description="Copy, Paste and Move support for content components.",
+      description="Copy, Paste and Move support for content components.",
+      long_description=long_description,
+      classifiers=['Environment :: Web Environment',
+                   'Intended Audience :: Developers',
+                   'License :: OSI Approved :: Zope Public License',
+                   'Programming Language :: Python',
+                   'Framework :: Zope3',
+                   ],
 
       packages=find_packages('src'),
       package_dir = {'': 'src'},
-
       namespace_packages=['zope',],
-      extras_require=dict(test=['zope.app.testing',
-                                'zope.app.principalannotation']),
       install_requires=['setuptools',
                         'zope.interface',
                         'zope.exceptions',
@@ -43,8 +48,10 @@ setup(name='zope.copypastemove',
                         'zope.location',
                         'zope.annotation',
                         'zope.lifecycleevent',
+                        # testing dependencies:
+                        'zope.app.testing',
+                        'zope.app.principalannotation',
                         ],
       include_package_data = True,
-
       zip_safe = False,
       )
