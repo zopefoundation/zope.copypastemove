@@ -1,18 +1,18 @@
 Changes
 =======
 
-3.4.1 (unreleased)
+3.5.0 (unreleased)
 ------------------
 
-...
+* Moved the test dependencies to a `test` extra requirement.
 
 3.4.0 (2007-09-28)
 ------------------
 
-No further changes since 3.4.0a1.
+* No further changes since 3.4.0a1.
 
 3.4.0a1 (2007-04-22)
 --------------------
 
-Initial release as a separate project, corresponds to
-zope.copypastemove from Zope 3.4.0a1
+* Initial release as a separate project, corresponds to
+  zope.copypastemove from Zope 3.4.0a1
