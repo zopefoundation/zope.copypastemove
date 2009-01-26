@@ -1,7 +1,7 @@
 Changes
 =======
 
-3.5.0 (unreleased)
+3.4.1 (2009-01-26)
 ------------------
 
 * Moved the test dependencies to a `test` extra requirement.

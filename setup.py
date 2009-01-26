@@ -23,11 +23,11 @@ long_description = (open('README.txt').read() +
                     open('CHANGES.txt').read())
 
 setup(name='zope.copypastemove',
-      version = '3.5.0dev',
+      version = '3.4.1',
       url='http://pypi.python.org/pypi/zope.copypastemove',
       license='ZPL 2.1',
       author='Zope Corporation and Contributors',
-      author_email='zope3-dev@zope.org',
+      author_email='zope-dev@zope.org',
       description="Copy, Paste and Move support for content components.",
       long_description=long_description,
       classifiers=['Environment :: Web Environment',
