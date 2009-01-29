@@ -14,4 +14,4 @@ interfaces for this kind of functionality:
 * ``IPrincipalClipboard``
 
 as well as standard implementations for containers and contained
-objects as known from the ``zope.app.container`` package.
+objects as known from the ``zope.container`` package.

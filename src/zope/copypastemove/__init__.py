@@ -34,11 +34,11 @@ from zope.copypastemove.interfaces import IContainerItemRenamer
 from zope.copypastemove.interfaces import IPrincipalClipboard
 from zope.copypastemove.interfaces import IItemNotFoundError
 
-from zope.app.container.sample import SampleContainer
-from zope.app.container.interfaces import IContainer, IOrderedContainer
-from zope.app.container.interfaces import IContained
-from zope.app.container.interfaces import INameChooser
-from zope.app.container.constraints import checkObject
+from zope.container.sample import SampleContainer
+from zope.container.interfaces import IContainer, IOrderedContainer
+from zope.container.interfaces import IContained
+from zope.container.interfaces import INameChooser
+from zope.container.constraints import checkObject
 
 class ItemNotFoundError(LookupError):
     implements(IItemNotFoundError)

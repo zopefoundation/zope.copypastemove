@@ -4,6 +4,7 @@ Changes
 3.4.2 (unreleased)
 ------------------
 
+* Use zope.container instead of zope.app.container.
 
 3.4.1 (2009-01-26)
 ------------------
