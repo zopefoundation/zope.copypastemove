@@ -51,7 +51,7 @@ class ObjectMover(object):
     contained in a container that has an adapter to `INameChooser`.
 
 
-    >>> from zope.app.container.contained import Contained
+    >>> from zope.container.contained import Contained
     >>> ob = Contained()
     >>> container = ExampleContainer()
     >>> container[u'foo'] = ob
@@ -134,13 +134,13 @@ class ObjectMover(object):
     ...         "Add an item"
     ...     __setitem__.precondition = preNoZ
 
-    >>> from zope.app.container.interfaces import IContainer
+    >>> from zope.container.interfaces import IContainer
     >>> class C1(object):
     ...     zope.interface.implements(I1, IContainer)
     ...     def __repr__(self):
     ...         return 'C1'
 
-    >>> from zope.app.container.constraints import checkObject
+    >>> from zope.container.constraints import checkObject
     >>> container3 = C1()
     >>> mover.moveableTo(container3, 'ZDummy')
     False
@@ -232,7 +232,7 @@ class ObjectCopier(object):
     The contained `object` should implement `IContained`.  It should be
     contained in a container that has an adapter to `INameChooser`.
 
-    >>> from zope.app.container.contained import Contained
+    >>> from zope.container.contained import Contained
     >>> ob = Contained()
     >>> container = ExampleContainer()
     >>> container[u'foo'] = ob
@@ -326,13 +326,13 @@ class ObjectCopier(object):
     ...         "Add an item"
     ...     __setitem__.precondition = preNoZ
 
-    >>> from zope.app.container.interfaces import IContainer
+    >>> from zope.container.interfaces import IContainer
     >>> class C1(object):
     ...     zope.interface.implements(I1, IContainer)
     ...     def __repr__(self):
     ...         return 'C1'
 
-    >>> from zope.app.container.constraints import checkObject
+    >>> from zope.container.constraints import checkObject
     >>> container3 = C1()
     >>> copier.copyableTo(container3, 'ZDummy')
     False
@@ -428,7 +428,7 @@ class ContainerItemRenamer(object):
     This adapter uses IObjectMover to move an item within the same container
     to a different name. We need to first setup an adapter for IObjectMover:
 
-      >>> from zope.app.container.interfaces import IContained
+      >>> from zope.container.interfaces import IContained
       >>> gsm = zope.component.getGlobalSiteManager()
       >>> gsm.registerAdapter(ObjectMover, (IContained, ), IObjectMover)
 
@@ -440,7 +440,7 @@ class ContainerItemRenamer(object):
 
     For this example, we'll rename an item 'foo':
 
-      >>> from zope.app.container.contained import Contained
+      >>> from zope.container.contained import Contained
       >>> foo = Contained()
       >>> container['foo'] = foo
       >>> container['foo'] is foo
@@ -496,14 +496,14 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
     To illustrate, we need to setup an IObjectMover, which is used in the
     renaming:
 
-      >>> from zope.app.container.interfaces import IContained
+      >>> from zope.container.interfaces import IContained
       >>> gsm = zope.component.getGlobalSiteManager()
       >>> gsm.registerAdapter(ObjectMover, (IContained, ), IObjectMover)
 
     To rename an item in an ordered container, we instantiate a
     OrderedContainerItemRenamer with the container:
 
-      >>> from zope.app.container.ordered import OrderedContainer
+      >>> from zope.container.ordered import OrderedContainer
       >>> container = OrderedContainer()
       >>> renamer = OrderedContainerItemRenamer(container)
 
