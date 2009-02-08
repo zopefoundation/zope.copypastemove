@@ -1,28 +1,35 @@
-Changes
+=======
+CHANGES
 =======
 
 3.5.1 (unreleased)
 ------------------
 
-* ...
+- Use the new zope.copy package for ObjectCopier to provide pluggable
+  copying mechanism that is not dependent on zope.location hardly.
+
+- Move the ItemNotFoundError exception to the interfaces module as
+  it's part of public API. Old import still works as we actually
+  use it where it was previously defined, however, the new import
+  place is preferred.
 
 3.5.0 (2009-01-31)
 ------------------
 
-* Use zope.container instead of zope.app.container.
+- Use zope.container instead of zope.app.container.
 
 3.4.1 (2009-01-26)
 ------------------
 
-* Moved the test dependencies to a `test` extra requirement.
+- Moved the test dependencies to a `test` extra requirement.
 
 3.4.0 (2007-09-28)
 ------------------
 
-* No further changes since 3.4.0a1.
+- No further changes since 3.4.0a1.
 
 3.4.0a1 (2007-04-22)
 --------------------
 
-* Initial release as a separate project, corresponds to
+- Initial release as a separate project, corresponds to
   zope.copypastemove from Zope 3.4.0a1
