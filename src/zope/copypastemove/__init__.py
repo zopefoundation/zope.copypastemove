@@ -21,8 +21,8 @@ import zope.component
 from zope.interface import implements, Invalid
 from zope.exceptions import DuplicationError
 from zope.component import adapts
+from zope.copy import copy
 from zope.event import notify
-from zope.location.pickling import locationCopy
 from zope.location.interfaces import ISublocations
 from zope.annotation.interfaces import IAnnotations
 from zope.annotation.interfaces import IAnnotations
@@ -32,16 +32,13 @@ from zope.copypastemove.interfaces import IObjectMover
 from zope.copypastemove.interfaces import IObjectCopier
 from zope.copypastemove.interfaces import IContainerItemRenamer
 from zope.copypastemove.interfaces import IPrincipalClipboard
-from zope.copypastemove.interfaces import IItemNotFoundError
+from zope.copypastemove.interfaces import ItemNotFoundError
 
 from zope.container.sample import SampleContainer
 from zope.container.interfaces import IContainer, IOrderedContainer
 from zope.container.interfaces import IContained
 from zope.container.interfaces import INameChooser
 from zope.container.constraints import checkObject
-
-class ItemNotFoundError(LookupError):
-    implements(IItemNotFoundError)
 
 class ObjectMover(object):
     """Adapter for moving objects between containers
@@ -396,11 +393,10 @@ class ObjectCopier(object):
         chooser = INameChooser(target)
         new_name = chooser.chooseName(new_name, obj)
 
-        copy = locationCopy(obj)
-        copy.__parent__ = copy.__name__ = None
-        notify(ObjectCopiedEvent(copy, obj))
+        new = copy(obj)
+        notify(ObjectCopiedEvent(new, obj))
 
-        target[new_name] = copy
+        target[new_name] = new
         return new_name
 
     def copyable(self):
