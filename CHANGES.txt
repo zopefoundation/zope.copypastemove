@@ -5,7 +5,7 @@ CHANGES
 3.5.2 (unreleased)
 ------------------
 
-- ...
+- Fix documentation for the IObjectCopier.copyTo method.
 
 3.5.1 (2009-02-09)
 ------------------
