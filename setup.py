@@ -42,6 +42,7 @@ setup(name='zope.copypastemove',
       namespace_packages=['zope',],
       extras_require=dict(
           test=['zope.app.testing',
+                'zope.app.component',
                 'zope.app.principalannotation']),
       install_requires=['setuptools',
                         'zope.annotation',
