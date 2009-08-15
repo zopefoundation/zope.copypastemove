@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-3.5.2 (unreleased)
+3.5.2 (2009-08-15)
 ------------------
 
 - Fix documentation for the IObjectCopier.copyTo method.
