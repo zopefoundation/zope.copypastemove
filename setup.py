@@ -11,11 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""Setup for zope.copypastemove package
+version = '0'
 
-$Id$
-"""
-import os
 from setuptools import setup, find_packages
 
 long_description = (open('README.txt').read() +
@@ -23,7 +20,7 @@ long_description = (open('README.txt').read() +
                     open('CHANGES.txt').read())
 
 setup(name='zope.copypastemove',
-      version = '3.5.2dev',
+      version = version,
       url='http://pypi.python.org/pypi/zope.copypastemove',
       license='ZPL 2.1',
       author='Zope Corporation and Contributors',
