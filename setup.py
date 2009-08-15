@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-version = '0'
+version = '3.5.2'
 
 from setuptools import setup, find_packages
 
