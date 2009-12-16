@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-3.6.0 (unreleased)
+3.6.0 (2009-12-16)
 ------------------
 
 - Use zope.principalannotation in favor of its app variant.
