@@ -16,7 +16,8 @@
 # When developing and releasing this package, please follow the documented
 # Zope Toolkit policies as described by this documentation.
 ##############################################################################
-version = '0'
+
+version = '3.6.0dev'
 
 from setuptools import setup, find_packages
 
@@ -43,8 +44,7 @@ setup(name='zope.copypastemove',
       package_dir = {'': 'src'},
       namespace_packages=['zope',],
       extras_require=dict(
-          test=['zope.app.testing',
-                'zope.app.component',
+          test=['zope.testing',
                 'zope.app.principalannotation']),
       install_requires=['setuptools',
                         'zope.annotation',

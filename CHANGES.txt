@@ -2,6 +2,11 @@
 CHANGES
 =======
 
+3.6.0 (unreleased)
+------------------
+
+- Avoid zope.app.component and testing dependencies.
+
 3.5.2 (2009-08-15)
 ------------------
 

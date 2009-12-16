@@ -21,7 +21,7 @@ from zope.annotation.interfaces import IAnnotations
 from zope.copypastemove.interfaces import IPrincipalClipboard
 from zope.copypastemove import PrincipalClipboard
 
-from zope.app.component.testing import PlacefulSetup
+from zope.component.testing import PlacelessSetup
 from zope.app.principalannotation import PrincipalAnnotationUtility
 from zope.app.principalannotation.interfaces import IPrincipalAnnotationUtility
 
@@ -31,11 +31,9 @@ class PrincipalStub(object):
         self.id = id
 
 
-class PrincipalClipboardTest(PlacefulSetup, unittest.TestCase):
+class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
 
     def setUp(self):
-        self.buildFolders()
-
         gsm = zope.component.getGlobalSiteManager()
         gsm.registerAdapter(PrincipalClipboard, (IAnnotations, ),
                             IPrincipalClipboard)
