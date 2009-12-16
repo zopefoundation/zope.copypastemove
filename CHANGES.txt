@@ -5,6 +5,8 @@ CHANGES
 3.6.0 (unreleased)
 ------------------
 
+- Use zope.principalannotation in favor of its app variant.
+
 - Avoid zope.app.component and testing dependencies.
 
 3.5.2 (2009-08-15)
