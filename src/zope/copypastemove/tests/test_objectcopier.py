@@ -15,12 +15,13 @@
 
 $Id$
 """
-from unittest import TestCase, TestSuite, main, makeSuite
+import unittest
+import doctest
 
 import zope.component
-from zope.testing import doctest
 from zope.traversing.api import traverse
-from zope.component.eventtesting import getEvents, clearEvents
+from zope.component.eventtesting import clearEvents
+from zope.component.eventtesting import getEvents
 from zope.copypastemove import ObjectCopier
 from zope.copypastemove.interfaces import IObjectCopier
 
@@ -77,7 +78,7 @@ def test_copy_events():
     """
 
 
-class ObjectCopierTest(testing.ContainerPlacefulSetup, TestCase):
+class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
 
     def setUp(self):
         testing.ContainerPlacefulSetup.setUp(self)
@@ -201,11 +202,9 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, TestCase):
         self.failUnless('folder1' in target)
 
 def test_suite():
-    return TestSuite((
-        makeSuite(ObjectCopierTest),
-        doctest.DocTestSuite(setUp=testing.ContainerPlacefulSetup().setUp,
-                             tearDown=testing.ContainerPlacefulSetup().tearDown),
+    return unittest.TestSuite((
+        unittest.makeSuite(ObjectCopierTest),
+        doctest.DocTestSuite(
+                    setUp=testing.ContainerPlacefulSetup().setUp,
+                    tearDown=testing.ContainerPlacefulSetup().tearDown),
         ))
-
-if __name__=='__main__':
-    main(defaultTest='test_suite')

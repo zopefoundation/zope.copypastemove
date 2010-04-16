@@ -5,6 +5,8 @@ CHANGES
 3.6.1 (unreleased)
 ------------------
 
+- Removed use of 'zope.testing.doctestunit' in favor of stdlib's 'doctest.
+
 - Moved zope.copypastemove related tests from zope.container here.
 
 3.6.0 (2009-12-16)

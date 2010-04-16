@@ -15,12 +15,13 @@
 
 $Id$
 """
-from unittest import TestCase, TestSuite, main, makeSuite
+import unittest
+import doctest
 
 import zope.component
-from zope.testing import doctest
 from zope.traversing.api import traverse
-from zope.component.eventtesting import getEvents, clearEvents
+from zope.component.eventtesting import clearEvents
+from zope.component.eventtesting import getEvents
 from zope.copypastemove import ObjectMover
 from zope.copypastemove.interfaces import IObjectMover
 
@@ -91,7 +92,7 @@ def test_move_events():
     """
 
 
-class ObjectMoverTest(testing.ContainerPlacefulSetup, TestCase):
+class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
 
     def setUp(self):
         testing.ContainerPlacefulSetup.setUp(self)
@@ -218,11 +219,9 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, TestCase):
 
         
 def test_suite():
-    return TestSuite((
-        makeSuite(ObjectMoverTest),
-        doctest.DocTestSuite(setUp=testing.ContainerPlacefulSetup().setUp,
-                             tearDown=testing.ContainerPlacefulSetup().tearDown),
+    return unittest.TestSuite((
+        unittest.makeSuite(ObjectMoverTest),
+        doctest.DocTestSuite(
+                    setUp=testing.ContainerPlacefulSetup().setUp,
+                    tearDown=testing.ContainerPlacefulSetup().tearDown),
         ))
-
-if __name__=='__main__':
-    main(defaultTest='test_suite')

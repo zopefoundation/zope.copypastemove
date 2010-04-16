@@ -17,7 +17,7 @@ $Id$
 """
 import unittest
 
-from zope.testing.doctestunit import DocTestSuite
+from doctest import DocTestSuite
 from zope.component import testing, eventtesting
 from zope.container.testing import PlacelessSetup
 
