@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2006 Zope Corporation and Contributors.
+# Copyright (c) 2006 Zope Foundation and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -29,7 +29,7 @@ setup(name='zope.copypastemove',
       version = version,
       url='http://pypi.python.org/pypi/zope.copypastemove',
       license='ZPL 2.1',
-      author='Zope Corporation and Contributors',
+      author='Zope Foundation and Contributors',
       author_email='zope-dev@zope.org',
       description="Copy, Paste and Move support for content components.",
       long_description=long_description,
