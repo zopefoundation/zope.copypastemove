@@ -200,6 +200,10 @@ class ObjectMover(object):
         chooser = INameChooser(target)
         new_name = chooser.chooseName(new_name, obj)
 
+        if target is container and new_name == orig_name:
+            # obstinate namechooser
+            return
+
         target[new_name] = obj
         del container[orig_name]
         return new_name

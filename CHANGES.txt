@@ -5,6 +5,10 @@ CHANGES
 3.6.1 (unreleased)
 ------------------
 
+- additional check for name and container if the namechooser computes a
+  name which is the same as the current name. This fixes
+  https://bugs.launchpad.net/zope.copypastemove/+bug/123532
+
 - Removed use of 'zope.testing.doctestunit' in favor of stdlib's 'doctest.
 
 - Moved zope.copypastemove related tests from zope.container here.
