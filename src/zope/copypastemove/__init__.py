@@ -445,6 +445,7 @@ class ContainerItemRenamer(object):
     to 'bar':
 
       >>> renamer.renameItem('foo', 'bar')
+      u'bar'
       >>> container['foo'] is foo
       Traceback (most recent call last):
       KeyError: 'foo'
@@ -473,6 +474,9 @@ class ContainerItemRenamer(object):
         self.container = container
 
     def renameItem(self, oldName, newName):
+        return self._renameItem(oldName, newName)
+
+    def _renameItem(self, oldName, newName):
         object = self.container.get(oldName)
         if object is None:
             raise ItemNotFoundError(self.container, oldName)
@@ -481,7 +485,7 @@ class ContainerItemRenamer(object):
         if newName in self.container:
             raise DuplicationError("%s is already in use" % newName)
 
-        mover.moveTo(self.container, newName)
+        return mover.moveTo(self.container, newName)
 
 
 class OrderedContainerItemRenamer(ContainerItemRenamer):
@@ -514,18 +518,21 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
     When we rename one of the items:
 
       >>> renamer.renameItem('1', 'I')
+      u'I'
 
     the order is preserved:
 
       >>> container.items()
-      [('I', 'Item 1'), ('2', 'Item 2'), ('3', 'Item 3')]
+      [(u'I', 'Item 1'), ('2', 'Item 2'), ('3', 'Item 3')]
 
     Renaming the other two items also preserves the origina order:
 
       >>> renamer.renameItem('2', 'II')
+      u'II'
       >>> renamer.renameItem('3', 'III')
+      u'III'
       >>> container.items()
-      [('I', 'Item 1'), ('II', 'Item 2'), ('III', 'Item 3')]
+      [(u'I', 'Item 1'), (u'II', 'Item 2'), (u'III', 'Item 3')]
 
     As with the standard renamer, trying to rename a non-existent item raises
     an error:
@@ -548,9 +555,10 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
 
     def renameItem(self, oldName, newName):
         order = list(self.container.keys())
-        super(OrderedContainerItemRenamer, self).renameItem(oldName, newName)
+        newName = self._renameItem(oldName, newName)
         order[order.index(oldName)] = newName
         self.container.updateOrder(order)
+        return newName
 
 
 class PrincipalClipboard(object):
