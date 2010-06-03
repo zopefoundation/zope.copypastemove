@@ -12,8 +12,6 @@
 #
 ##############################################################################
 """Object Copier Tests
-
-$Id$
 """
 import unittest
 import doctest

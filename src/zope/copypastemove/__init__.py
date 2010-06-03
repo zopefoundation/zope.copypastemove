@@ -12,8 +12,6 @@
 #
 ##############################################################################
 """Copy, Paste and Move support for content components
-
-$Id$
 """
 __docformat__ = 'restructuredtext'
 

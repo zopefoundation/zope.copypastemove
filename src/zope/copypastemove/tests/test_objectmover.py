@@ -12,8 +12,6 @@
 #
 ##############################################################################
 """Object Mover Tests
-
-$Id$
 """
 import unittest
 import doctest
