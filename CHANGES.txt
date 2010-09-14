@@ -2,13 +2,14 @@
 CHANGES
 =======
 
-3.6.1 (unreleased)
+3.7.0 (2010-09-14)
 ------------------
 
 - Honor the name given by the ``IObjectMover`` in
-  ``OrderedContainerItemRenamer.renameItem``.  Thanks to Marius Gedminas
-  for the patch, and to Justin Ryan for the test.
-  Fixes https://bugs.launchpad.net/zope.copypastemove/+bug/98385.
+  ``OrderedContainerItemRenamer.renameItem``. It now returns the new of the
+  obejct, too. Thanks to Marius Gedminas for the patch, and to Justin Ryan
+  for the test.  Fixes
+  https://bugs.launchpad.net/zope.copypastemove/+bug/98385.
 
 - Add a check for name and container if the namechooser computes a
   name which is the same as the current name.
