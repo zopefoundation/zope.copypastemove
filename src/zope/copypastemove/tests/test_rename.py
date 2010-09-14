@@ -121,6 +121,3 @@ def test_suite():
                          setUp=setUp, tearDown=testing.tearDown),
             DocTestSuite(setUp=setUp, tearDown=testing.tearDown),
             ))
-
-if __name__=='__main__':
-    unittest.main(defaultTest='test_suite')
