@@ -17,7 +17,7 @@
 # Zope Toolkit policies as described by this documentation.
 ##############################################################################
 
-version = '3.8.0'
+version = '3.8.1dev'
 
 from setuptools import setup, find_packages
 
