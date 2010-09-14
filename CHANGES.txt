@@ -2,10 +2,12 @@
 CHANGES
 =======
 
-3.7.1 (unreleased)
+3.8.0 (2010-09-14)
 ------------------
 
-- Nothing changed yet.
+- Added a test that makes sure that dublin core meta data of folder contents
+  get updated when the folder gets copied. (Requires `zope.dublincore` 3.8
+  or above.)
 
 
 3.7.0 (2010-09-14)
