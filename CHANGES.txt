@@ -2,10 +2,11 @@
 CHANGES
 =======
 
-3.8.1 (unreleased)
+3.9.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Include zcml dependencies in configure.zcml, require the necessary packages
+  via a zcml extra, added tests for zcml.
 
 
 3.8.0 (2010-09-14)

@@ -17,7 +17,7 @@
 # Zope Toolkit policies as described by this documentation.
 ##############################################################################
 
-version = '3.8.1dev'
+version = '3.9.0dev'
 
 from setuptools import setup, find_packages
 
@@ -48,7 +48,12 @@ setup(name='zope.copypastemove',
                 'zope.testing',
                 'zope.traversing',
                 'zope.dublincore >= 3.8',
-                ]),
+                ],
+          zcml=[
+            'zope.component[zcml]',
+            'zope.configure',
+            'zope.security[zcml]',
+            ]),
       install_requires=['setuptools',
                         'zope.annotation',
                         'zope.component',
