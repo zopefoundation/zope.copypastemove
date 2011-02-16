@@ -51,7 +51,7 @@ setup(name='zope.copypastemove',
                 ],
           zcml=[
             'zope.component[zcml]',
-            'zope.configure',
+            'zope.configuration',
             'zope.security[zcml]',
             ]),
       install_requires=['setuptools',
