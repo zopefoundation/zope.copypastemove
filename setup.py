@@ -17,7 +17,7 @@
 # Zope Toolkit policies as described by this documentation.
 ##############################################################################
 
-version = '3.9.0dev'
+version = '4.0.0dev'
 
 from setuptools import setup, find_packages
 
@@ -37,6 +37,9 @@ setup(name='zope.copypastemove',
                    'Intended Audience :: Developers',
                    'License :: OSI Approved :: Zope Public License',
                    'Programming Language :: Python',
+                   'Programming Language :: Python :: 2',
+                   'Programming Language :: Python :: 2.6',
+                   'Programming Language :: Python :: 2.7',
                    'Framework :: Zope3',
                    ],
 

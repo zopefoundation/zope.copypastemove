@@ -2,8 +2,16 @@
 CHANGES
 =======
 
-3.9.0 (unreleased)
+4.0.0 (unreleased)
 ------------------
+
+- Replaced deprecated ``zope.component.adapts`` usage with equivalent
+  ``zope.component.adapter`` decorator.
+
+- Replaced deprecated ``zope.interface.implements`` usage with equivalent
+  ``zope.interface.implementer`` decorator.
+
+- Dropped support for Python 2.4 and 2.5.
 
 - Include zcml dependencies in configure.zcml, require the necessary packages
   via a zcml extra, added tests for zcml.

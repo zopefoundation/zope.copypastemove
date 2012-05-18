@@ -16,9 +16,9 @@
 __docformat__ = 'restructuredtext'
 
 import zope.component
-from zope.interface import implements, Invalid
+from zope.interface import implementer, Invalid
 from zope.exceptions import DuplicationError
-from zope.component import adapts
+from zope.component import adapter
 from zope.copy import copy
 from zope.event import notify
 from zope.location.interfaces import ISublocations
@@ -38,6 +38,8 @@ from zope.container.interfaces import IContained
 from zope.container.interfaces import INameChooser
 from zope.container.constraints import checkObject
 
+@adapter(IContained)
+@implementer(IObjectMover)
 class ObjectMover(object):
     """Adapter for moving objects between containers
 
@@ -130,8 +132,8 @@ class ObjectMover(object):
     ...     __setitem__.precondition = preNoZ
 
     >>> from zope.container.interfaces import IContainer
-    >>> class C1(object):
-    ...     zope.interface.implements(I1, IContainer)
+    >>> @zope.interface.implementer(I1, IContainer)
+    ... class C1(object):
     ...     def __repr__(self):
     ...         return 'C1'
 
@@ -153,8 +155,8 @@ class ObjectMover(object):
     >>> class I2(zope.interface.Interface):
     ...     __parent__ = zope.schema.Field(constraint=con1)
     ...
-    >>> class constrainedObject(object):
-    ...     zope.interface.implements(I2)
+    >>> @zope.interface.implementer(I2)
+    ... class constrainedObject(object):
     ...     def __init__(self):
     ...         self.__name__ = 'constrainedObject'
     ...
@@ -167,10 +169,6 @@ class ObjectMover(object):
     True
 
     """
-
-    adapts(IContained)
-
-    implements(IObjectMover)
 
     def __init__(self, object):
         self.context = object
@@ -224,6 +222,8 @@ class ObjectMover(object):
             return False
         return True
 
+@adapter(IContained)
+@implementer(IObjectCopier)
 class ObjectCopier(object):
     """Adapter for copying objects between containers
 
@@ -326,8 +326,8 @@ class ObjectCopier(object):
     ...     __setitem__.precondition = preNoZ
 
     >>> from zope.container.interfaces import IContainer
-    >>> class C1(object):
-    ...     zope.interface.implements(I1, IContainer)
+    >>> @zope.interface.implementer(I1, IContainer)
+    ... class C1(object):
     ...     def __repr__(self):
     ...         return 'C1'
 
@@ -349,8 +349,8 @@ class ObjectCopier(object):
     >>> class I2(zope.interface.Interface):
     ...     __parent__ = zope.schema.Field(constraint=con1)
     ...
-    >>> class constrainedObject(object):
-    ...     zope.interface.implements(I2)
+    >>> @zope.interface.implementer(I2)
+    ... class constrainedObject(object):
     ...     def __init__(self):
     ...         self.__name__ = 'constrainedObject'
     ...
@@ -363,10 +363,6 @@ class ObjectCopier(object):
     True
 
     """
-
-    adapts(IContained)
-
-    implements(IObjectCopier)
 
     def __init__(self, object):
         self.context = object
@@ -416,6 +412,8 @@ class ObjectCopier(object):
         return True
 
 
+@adapter(IContainer)
+@implementer(IContainerItemRenamer)
 class ContainerItemRenamer(object):
     """An IContainerItemRenamer adapter for containers.
 
@@ -464,10 +462,6 @@ class ContainerItemRenamer(object):
 
     """
 
-    adapts(IContainer)
-
-    implements(IContainerItemRenamer)
-
     def __init__(self, container):
         self.container = container
 
@@ -486,6 +480,8 @@ class ContainerItemRenamer(object):
         return mover.moveTo(self.container, newName)
 
 
+@adapter(IOrderedContainer)
+@implementer(IContainerItemRenamer)
 class OrderedContainerItemRenamer(ContainerItemRenamer):
     """Renames items within an ordered container.
 
@@ -547,10 +543,6 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
 
     """
 
-    adapts(IOrderedContainer)
-
-    implements(IContainerItemRenamer)
-
     def renameItem(self, oldName, newName):
         order = list(self.container.keys())
         newName = self._renameItem(oldName, newName)
@@ -559,16 +551,14 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
         return newName
 
 
+@adapter(IAnnotations)
+@implementer(IPrincipalClipboard)
 class PrincipalClipboard(object):
     """Principal clipboard
 
     Clipboard information consists of mappings of
     ``{'action':action, 'target':target}``.
     """
-
-    adapts(IAnnotations)
-
-    implements(IPrincipalClipboard)
 
     def __init__(self, annotation):
         self.context = annotation
@@ -594,10 +584,9 @@ class PrincipalClipboard(object):
         return self.context.get('clipboard', ())
 
 
+@implementer(INameChooser)
 class ExampleContainer(SampleContainer):
     # Sample container used for examples in doc stringss in this module
-
-    implements(INameChooser)
 
     def chooseName(self, name, ob):
        while name in self:
@@ -619,8 +608,8 @@ def dispatchToSublocations(object, event):
       ...     def __repr__(self):
       ...         return '%s(%s)' % (self.__class__.__name__, self.__name__)
 
-      >>> class C(L):
-      ...     implements(ISublocations)
+      >>> @implementer(ISublocations)
+      ... class C(L):
       ...     def __init__(self, name, *subs):
       ...         L.__init__(self, name)
       ...         self.subs = subs

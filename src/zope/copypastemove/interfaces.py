@@ -15,7 +15,7 @@
 """
 __docformat__ = 'restructuredtext'
 
-from zope.interface import Interface, implements
+from zope.interface import Interface, implementer
 
 class IObjectMover(Interface):
     """Use `IObjectMover(obj)` to move an object somewhere."""
@@ -89,5 +89,6 @@ class IPrincipalClipboard(Interface):
 class IItemNotFoundError(Interface):
     pass
 
+@implementer(IItemNotFoundError)
 class ItemNotFoundError(LookupError):
-    implements(IItemNotFoundError)
+    pass

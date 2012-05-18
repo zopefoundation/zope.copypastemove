@@ -16,7 +16,7 @@
 import unittest
 
 from doctest import DocTestSuite
-from zope.component import testing, eventtesting, provideAdapter, adapts
+from zope.component import testing, eventtesting, provideAdapter, adapter
 from zope.container.testing import PlacelessSetup, ContainerPlacefulSetup
 from zope.copypastemove import ContainerItemRenamer, ObjectMover
 from zope.copypastemove.interfaces import IContainerItemRenamer
@@ -26,8 +26,8 @@ from zope.container.sample import SampleContainer
 class TestContainer(SampleContainer):
     pass
 
+@adapter(TestContainer)
 class ObstinateNameChooser(NameChooser):
-    adapts(TestContainer)
 
     def chooseName(self, name, ob):
         return u'foobar'
@@ -64,7 +64,7 @@ def doctest_namechooser_rename_preserve_order():
 
     Also: https://bugs.launchpad.net/zope.copypastemove/+bug/98385
 
-        >>> from zope.component import adapts, provideAdapter
+        >>> from zope.component import adapter, provideAdapter
         >>> from zope.copypastemove import ObjectMover
         >>> provideAdapter(ObjectMover)
 
@@ -85,12 +85,12 @@ def doctest_namechooser_rename_preserve_order():
 
     with a custom name chooser
 
-        >>> from zope.interface import implements, Interface
+        >>> from zope.interface import implementer, Interface
         >>> from zope.container.interfaces import INameChooser
         >>> class IMyContainer(Interface): pass
-        >>> class MyNameChooser(object):
-        ...     adapts(IMyContainer)
-        ...     implements(INameChooser)
+        >>> @adapter(IMyContainer)
+        ... @implementer(INameChooser)
+        ... class MyNameChooser(object):
         ...     def __init__(self, container):
         ...         self.container = container
         ...     def chooseName(self, name, obj):
