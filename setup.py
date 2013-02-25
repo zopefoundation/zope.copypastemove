@@ -38,7 +38,7 @@ long_description = (open('README.txt').read() +
                     open('CHANGES.txt').read())
 
 setup(name='zope.copypastemove',
-      version = '4.0.0a1.dev',
+      version='4.0.0a1',
       url='http://pypi.python.org/pypi/zope.copypastemove',
       license='ZPL 2.1',
       author='Zope Foundation and Contributors',
