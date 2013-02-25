@@ -13,8 +13,9 @@
 ##############################################################################
 """Object Mover Tests
 """
-import unittest
 import doctest
+import re
+import unittest
 
 import zope.component
 from zope.traversing.api import traverse
@@ -22,8 +23,17 @@ from zope.component.eventtesting import clearEvents
 from zope.component.eventtesting import getEvents
 from zope.copypastemove import ObjectMover
 from zope.copypastemove.interfaces import IObjectMover
+from zope.testing import renormalizing
 
 from zope.container import testing
+
+checker = renormalizing.RENormalizing([
+    # Python 3 unicode removed the "u".
+    (re.compile("u('.*?')"),
+     r"\1"),
+    (re.compile('u(".*?")'),
+     r"\1"),
+    ])
 
 class File(object):
     pass
@@ -34,7 +44,7 @@ def test_move_events():
 
       >>> from zope.container.sample import SampleContainer
       >>> root = SampleContainer()
-      
+
     Prepare the setup::
 
       >>> from zope import component
@@ -96,7 +106,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         testing.ContainerPlacefulSetup.setUp(self)
         self.buildFolders()
         zope.component.provideAdapter(ObjectMover, (None,), )
- 
+
     def test_movetosame(self):
         # Should be a noop, because "moving" to same location
         root = self.rootFolder
@@ -215,11 +225,12 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         mover.moveTo(target)
         self.failUnless('folder1' in target)
 
-        
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(ObjectMoverTest),
         doctest.DocTestSuite(
                     setUp=testing.ContainerPlacefulSetup().setUp,
-                    tearDown=testing.ContainerPlacefulSetup().tearDown),
+                    tearDown=testing.ContainerPlacefulSetup().tearDown,
+                    checker=checker),
         ))

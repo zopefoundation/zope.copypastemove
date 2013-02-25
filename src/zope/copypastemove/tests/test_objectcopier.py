@@ -13,8 +13,9 @@
 ##############################################################################
 """Object Copier Tests
 """
-import unittest
 import doctest
+import re
+import unittest
 
 import zope.component
 from zope.traversing.api import traverse
@@ -22,8 +23,17 @@ from zope.component.eventtesting import clearEvents
 from zope.component.eventtesting import getEvents
 from zope.copypastemove import ObjectCopier
 from zope.copypastemove.interfaces import IObjectCopier
+from zope.testing import renormalizing
 
 from zope.container import testing
+
+checker = renormalizing.RENormalizing([
+    # Python 3 unicode removed the "u".
+    (re.compile("u('.*?')"),
+     r"\1"),
+    (re.compile('u(".*?")'),
+     r"\1"),
+    ])
 
 class File(object):
     pass
@@ -39,7 +49,7 @@ def test_copy_events():
 
       >>> from zope.container.sample import SampleContainer
       >>> root = SampleContainer()
-      
+
     Prepare some objects::
 
       >>> folder = SampleContainer()
@@ -52,7 +62,7 @@ def test_copy_events():
     Now make a copy::
 
       >>> clearEvents()
-      >>> copier = IObjectCopier(foo)  
+      >>> copier = IObjectCopier(foo)
       >>> copier.copyTo(folder, u'bar')
       u'bar'
 
@@ -82,7 +92,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         testing.ContainerPlacefulSetup.setUp(self)
         self.buildFolders()
         zope.component.provideAdapter(ObjectCopier, (None,), IObjectCopier)
-        
+
     def test_copytosame(self):
         root = self.rootFolder
         container = traverse(root, 'folder1')
@@ -158,7 +168,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         copier = IObjectCopier(file)
         self.failUnless(copier.copyableTo(container, 'file1'))
-        
+
     def test_copyfoldertosibling(self):
         root = self.rootFolder
         target = traverse(root, '/folder2')
@@ -204,5 +214,6 @@ def test_suite():
         unittest.makeSuite(ObjectCopierTest),
         doctest.DocTestSuite(
                     setUp=testing.ContainerPlacefulSetup().setUp,
-                    tearDown=testing.ContainerPlacefulSetup().tearDown),
+                    tearDown=testing.ContainerPlacefulSetup().tearDown,
+                    checker=checker),
         ))

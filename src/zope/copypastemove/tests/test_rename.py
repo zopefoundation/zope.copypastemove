@@ -13,15 +13,25 @@
 ##############################################################################
 """Test renaming of components
 """
+import doctest
+import re
 import unittest
 
-from doctest import DocTestSuite
 from zope.component import testing, eventtesting, provideAdapter, adapter
 from zope.container.testing import PlacelessSetup, ContainerPlacefulSetup
 from zope.copypastemove import ContainerItemRenamer, ObjectMover
 from zope.copypastemove.interfaces import IContainerItemRenamer
 from zope.container.contained import Contained, NameChooser
 from zope.container.sample import SampleContainer
+from zope.testing import renormalizing
+
+checker = renormalizing.RENormalizing([
+    # Python 3 unicode removed the "u".
+    (re.compile("u('.*?')"),
+     r"\1"),
+    (re.compile('u(".*?")'),
+     r"\1"),
+    ])
 
 class TestContainer(SampleContainer):
     pass
@@ -85,6 +95,7 @@ def doctest_namechooser_rename_preserve_order():
 
     with a custom name chooser
 
+        >>> import codecs
         >>> from zope.interface import implementer, Interface
         >>> from zope.container.interfaces import INameChooser
         >>> class IMyContainer(Interface): pass
@@ -94,7 +105,7 @@ def doctest_namechooser_rename_preserve_order():
         ...     def __init__(self, container):
         ...         self.container = container
         ...     def chooseName(self, name, obj):
-        ...         return name.encode('rot-13')
+        ...         return codecs.getencoder('rot-13')(name)[0]
         >>> provideAdapter(MyNameChooser)
 
         >>> from zope.interface import alsoProvides
@@ -115,9 +126,14 @@ def doctest_namechooser_rename_preserve_order():
     """
 
 def test_suite():
+    flags = \
+        doctest.NORMALIZE_WHITESPACE | \
+        doctest.ELLIPSIS | \
+        doctest.IGNORE_EXCEPTION_DETAIL
     return unittest.TestSuite((
             unittest.makeSuite(RenamerTest),
-            DocTestSuite('zope.copypastemove',
-                         setUp=setUp, tearDown=testing.tearDown),
-            DocTestSuite(setUp=setUp, tearDown=testing.tearDown),
+            doctest.DocTestSuite('zope.copypastemove',
+                         setUp=setUp, tearDown=testing.tearDown,
+                         checker=checker, optionflags=flags),
+            doctest.DocTestSuite(setUp=setUp, tearDown=testing.tearDown),
             ))

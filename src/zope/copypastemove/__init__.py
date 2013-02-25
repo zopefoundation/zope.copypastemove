@@ -655,8 +655,7 @@ def dispatchToSublocations(object, event):
 
     we see that our handler has seen all of the subobjects:
 
-      >>> seenreprs = map(repr, seen)
-      >>> seenreprs.sort()
+      >>> seenreprs = sorted(map(repr, seen))
       >>> seenreprs #doctest: +NORMALIZE_WHITESPACE
       ['(C(1), C(1))', '(C(11), C(1))', '(C(12), C(1))',
        '(L(111), C(1))', '(L(112), C(1))', '(L(121), C(1))',
