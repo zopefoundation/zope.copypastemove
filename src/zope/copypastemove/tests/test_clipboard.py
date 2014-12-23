@@ -51,10 +51,10 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
                     {'action':'move', 'target':'bla/foo'},
                     {'action':'move', 'target':'bla/bar'})
 
-        self.failUnless(clipboard.getContents() == expected)
+        self.assertEqual(clipboard.getContents(), expected)
         clipboard.addItems('copy', ['bla'])
         expected = expected + ({'action':'copy', 'target':'bla'},)
-        self.failUnless(clipboard.getContents() == expected)
+        self.assertEqual(clipboard.getContents(), expected)
 
     def testSetContents(self):
         user = PrincipalStub('srichter')
@@ -67,10 +67,10 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
                     {'action':'move', 'target':'bla/foo'},
                     {'action':'move', 'target':'bla/bar'})
         clipboard.setContents(expected)
-        self.failUnless(clipboard.getContents() == expected)
+        self.assertEqual(clipboard.getContents(), expected)
         clipboard.addItems('copy', ['bla'])
         expected = expected + ({'action':'copy', 'target':'bla'},)
-        self.failUnless(clipboard.getContents() == expected)
+        self.assertEqual(clipboard.getContents(), expected)
 
     def testClearContents(self):
         user = PrincipalStub('srichter')
@@ -79,7 +79,7 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
         annotations = annotationutil.getAnnotations(user)
         clipboard = IPrincipalClipboard(annotations)
         clipboard.clearContents()
-        self.failUnless(clipboard.getContents() == ())
+        self.assertEqual(clipboard.getContents(), ())
 
 def test_suite():
     return unittest.TestSuite((

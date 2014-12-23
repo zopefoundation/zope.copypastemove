@@ -115,8 +115,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(container, 'file1')
-        self.failUnless('file1' in container)
-        self.assertEquals(len(container), 2)
+        self.assertTrue('file1' in container)
+        self.assertEqual(len(container), 2)
 
     def test_movetosamewithnewname(self):
         root = self.rootFolder
@@ -125,8 +125,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(container, 'file2')
-        self.failIf('file1' in container)
-        self.failUnless('file2' in container)
+        self.assertFalse('file1' in container)
+        self.assertTrue('file2' in container)
 
     def test_movetoother(self):
         root = self.rootFolder
@@ -136,8 +136,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(target, 'file1')
-        self.failIf('file1' in container)
-        self.failUnless('file1' in target)
+        self.assertFalse('file1' in container)
+        self.assertTrue('file1' in target)
 
     def test_movetootherwithnewname(self):
         root = self.rootFolder
@@ -147,8 +147,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(target, 'file2')
-        self.failIf('file1' in container)
-        self.failUnless('file2' in target)
+        self.assertFalse('file1' in container)
+        self.assertTrue('file2' in target)
 
     def test_movetootherwithnamecollision(self):
         root = self.rootFolder
@@ -159,9 +159,9 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(target, 'file1')
-        self.failIf('file1' in container)
-        self.failUnless('file1' in target)
-        self.failUnless('file1-2' in target)
+        self.assertFalse('file1' in container)
+        self.assertTrue('file1' in target)
+        self.assertTrue('file1-2' in target)
 
     def test_moveable(self):
         root = self.rootFolder
@@ -169,7 +169,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         container['file1'] = File()
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
-        self.failUnless(mover.moveable())
+        self.assertTrue(mover.moveable())
 
     def test_moveableTo(self):
         #  A file should be moveable to a folder that has an
@@ -179,7 +179,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         container['file1'] = File()
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
-        self.failUnless(mover.moveableTo(container, 'file1'))
+        self.assertTrue(mover.moveableTo(container, 'file1'))
 
     def test_movefoldertosibling(self):
         root = self.rootFolder
@@ -187,7 +187,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.failUnless('folder1_1' in target)
+        self.assertTrue('folder1_1' in target)
 
     def test_movefoldertosame(self):
         # Should be a noop, because "moving" to same location
@@ -196,8 +196,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.failUnless('folder1_1' in target)
-        self.assertEquals(len(target), 1)
+        self.assertTrue('folder1_1' in target)
+        self.assertEqual(len(target), 1)
 
     def test_movefoldertosame2(self):
         # Should be a noop, because "moving" to same location
@@ -206,8 +206,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1/folder1_1_1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.failUnless('folder1_1_1' in target)
-        self.assertEquals(len(target), 1)
+        self.assertTrue('folder1_1_1' in target)
+        self.assertEqual(len(target), 1)
 
     def test_movefolderfromroot(self):
         root = self.rootFolder
@@ -215,7 +215,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.failUnless('folder1' in target)
+        self.assertTrue('folder1' in target)
 
     def test_movefolderfromroot2(self):
         root = self.rootFolder
@@ -223,7 +223,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.failUnless('folder1' in target)
+        self.assertTrue('folder1' in target)
 
 
 def test_suite():
