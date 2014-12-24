@@ -16,7 +16,12 @@
 # When developing and releasing this package, please follow the documented
 # Zope Toolkit policies as described by this documentation.
 ##############################################################################
+import os
 from setuptools import setup, find_packages
+
+def read(*rnames):
+    with open(os.path.join(os.path.dirname(__file__), *rnames)) as f:
+        return f.read()
 
 def alltests():
     import os
@@ -33,9 +38,7 @@ def alltests():
     suites = list(zope.testrunner.find.find_suites(options))
     return unittest.TestSuite(suites)
 
-long_description = (open('README.txt').read() +
-                    '\n\n' +
-                    open('CHANGES.txt').read())
+long_description = (read('README.rst') + '\n\n' + read('CHANGES.rst'))
 
 setup(name='zope.copypastemove',
       version='4.0.0.dev0',
