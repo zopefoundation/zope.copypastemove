@@ -41,7 +41,7 @@ def alltests():
 long_description = (read('README.rst') + '\n\n' + read('CHANGES.rst'))
 
 setup(name='zope.copypastemove',
-      version='4.0.0',
+      version='4.0.1.dev0',
       url='http://pypi.python.org/pypi/zope.copypastemove',
       license='ZPL 2.1',
       author='Zope Foundation and Contributors',
