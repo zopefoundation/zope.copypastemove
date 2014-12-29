@@ -1,5 +1,8 @@
-Overview
----------
+``zope.copypastemove``
+======================
+
+.. image:: https://travis-ci.org/zopefoundation/zope.copypastemove.png?branch=master
+        :target: https://travis-ci.org/zopefoundation/zope.copypastemove
 
 This package provides Copy, Paste and Move support for content
 components in Zope.  In particular, it defines the following
