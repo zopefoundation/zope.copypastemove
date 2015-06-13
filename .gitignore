@@ -2,10 +2,10 @@
 __pycache__
 src/*.egg-info
 benchmark/*.egg-info
-
 .installed.cfg
 .tox
-bin
-develop-eggs
-docs
-parts
+bin/
+develop-eggs/
+docs/
+eggs/
+parts/
