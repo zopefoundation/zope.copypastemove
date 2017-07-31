@@ -21,11 +21,8 @@ import zope.configuration.xmlconfig
 class ZCMLTest(unittest.TestCase):
 
     def test_configure_zcml_should_be_loadable(self):
-        try:
-            zope.configuration.xmlconfig.XMLConfig(
-                'configure.zcml', zope.copypastemove)()
-        except Exception as e:
-            self.fail(e)
+        zope.configuration.xmlconfig.XMLConfig(
+            'configure.zcml', zope.copypastemove)()
 
     def test_configure_should_register_n_components(self):
         gsm = zope.component.getGlobalSiteManager()

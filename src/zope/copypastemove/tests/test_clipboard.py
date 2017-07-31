@@ -82,10 +82,8 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
         self.assertEqual(clipboard.getContents(), ())
 
 def test_suite():
-    return unittest.TestSuite((
-        unittest.makeSuite(PrincipalClipboardTest),
-        ))
+    return unittest.defaultTestLoader.loadTestsFromName(__name__)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
-

@@ -23,7 +23,6 @@ from zope.copy import copy
 from zope.event import notify
 from zope.location.interfaces import ISublocations
 from zope.annotation.interfaces import IAnnotations
-from zope.annotation.interfaces import IAnnotations
 from zope.lifecycleevent import ObjectCopiedEvent
 
 from zope.copypastemove.interfaces import IObjectMover
@@ -376,7 +375,6 @@ class ObjectCopier(object):
         an `IObjectCopied` event is published.
         """
         obj = self.context
-        container = obj.__parent__
 
         orig_name = obj.__name__
         if new_name is None:
@@ -589,9 +587,9 @@ class ExampleContainer(SampleContainer):
     # Sample container used for examples in doc stringss in this module
 
     def chooseName(self, name, ob):
-       while name in self:
-          name += '_'
-       return name
+        while name in self:
+            name += '_'
+        return name
 
 
 def dispatchToSublocations(object, event):
@@ -665,5 +663,4 @@ def dispatchToSublocations(object, event):
     subs = ISublocations(object, None)
     if subs is not None:
         for sub in subs.sublocations():
-            for ignored in zope.component.subscribers((sub, event), None):
-                pass # They do work in the adapter fetch
+            zope.component.handle(sub, event)

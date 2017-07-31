@@ -24,7 +24,6 @@ def read(*rnames):
         return f.read()
 
 def alltests():
-    import os
     import sys
     import unittest
     # use the zope.testrunner machinery to find all the
@@ -40,66 +39,67 @@ def alltests():
 
 long_description = (read('README.rst') + '\n\n' + read('CHANGES.rst'))
 
+ZCML_REQUIRES = [
+    'zope.component[zcml]',
+    'zope.configuration',
+    'zope.security[zcml]',
+]
+
+TESTS_REQUIRE = ZCML_REQUIRES + [
+    'zope.dublincore >= 3.8',
+    'zope.principalannotation',
+    'zope.testing',
+    'zope.testrunner',
+    'zope.traversing',
+]
+
 setup(name='zope.copypastemove',
       version='4.1.0.dev0',
-      url='http://pypi.python.org/pypi/zope.copypastemove',
+      url='http://github.com/zopefoundation/zope.copypastemove',
       license='ZPL 2.1',
       author='Zope Foundation and Contributors',
       author_email='zope-dev@zope.org',
       description="Copy, Paste and Move support for content components.",
       long_description=long_description,
       classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: Zope Public License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
-        'Natural Language :: English',
-        'Operating System :: OS Independent',
-        'Topic :: Internet :: WWW/HTTP',
-        'Framework :: Zope3',
-        ],
-
+          'Environment :: Web Environment',
+          'Intended Audience :: Developers',
+          'License :: OSI Approved :: Zope Public License',
+          'Programming Language :: Python',
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.4',
+          'Programming Language :: Python :: 3.5',
+          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: Implementation :: CPython',
+          'Programming Language :: Python :: Implementation :: PyPy',
+          'Natural Language :: English',
+          'Operating System :: OS Independent',
+          'Topic :: Internet :: WWW/HTTP',
+          'Framework :: Zope3',
+      ],
       packages=find_packages('src'),
-      package_dir = {'': 'src'},
+      package_dir={'': 'src'},
       namespace_packages=['zope',],
-      extras_require=dict(
-          test=['zope.principalannotation',
-                'zope.testing',
-                'zope.traversing',
-                'zope.dublincore >= 3.8',
-                ],
-          zcml=[
-            'zope.component[zcml]',
-            'zope.configuration',
-            'zope.security[zcml]',
-            ]),
-      install_requires=['setuptools',
-                        'zope.annotation',
-                        'zope.component',
-                        'zope.container',
-                        'zope.copy',
-                        'zope.event',
-                        'zope.exceptions',
-                        'zope.interface',
-                        'zope.lifecycleevent',
-                        'zope.location',
-                        ],
-      tests_require = [
-          'zope.dublincore',
-          'zope.principalannotation',
-          'zope.testing',
-          'zope.testrunner',
-          'zope.traversing',
-          ],
-      test_suite = '__main__.alltests',
-      include_package_data = True,
-      zip_safe = False,
-      )
+      extras_require={
+          'test': TESTS_REQUIRE,
+          'zcml': ZCML_REQUIRES,
+      },
+      install_requires=[
+          'setuptools',
+          'zope.annotation',
+          'zope.component',
+          'zope.container',
+          'zope.copy',
+          'zope.event',
+          'zope.exceptions',
+          'zope.interface',
+          'zope.lifecycleevent',
+          'zope.location',
+      ],
+      tests_require=TESTS_REQUIRE,
+      test_suite='__main__.alltests',
+      include_package_data=True,
+      zip_safe=False,
+)

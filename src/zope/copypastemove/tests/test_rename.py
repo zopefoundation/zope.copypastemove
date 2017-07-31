@@ -31,7 +31,7 @@ checker = renormalizing.RENormalizing([
      r"\1"),
     (re.compile('u(".*?")'),
      r"\1"),
-    ])
+])
 
 class TestContainer(SampleContainer):
     pass
@@ -60,80 +60,81 @@ class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
 
 container_setup = PlacelessSetup()
 
-def setUp(test):
+def globalSetUp(test):
     testing.setUp()
     eventtesting.setUp()
     container_setup.setUp()
 
+class TestRename(unittest.TestCase):
 
-def doctest_namechooser_rename_preserve_order():
-    """Test for OrderedContainerItemRenamer.renameItem
+    def setUp(self):
+        globalSetUp(self)
 
-    This is a regression test for
-    http://www.zope.org/Collectors/Zope3-dev/658
+    def tearDown(self):
+        testing.tearDown()
 
-    Also: https://bugs.launchpad.net/zope.copypastemove/+bug/98385
+    def test_namechooser_rename_preserve_order(self):
+        # Test for OrderedContainerItemRenamer.renameItem
 
-        >>> from zope.component import adapter, provideAdapter
-        >>> from zope.copypastemove import ObjectMover
-        >>> provideAdapter(ObjectMover)
+        # This is a regression test for
+        # http://www.zope.org/Collectors/Zope3-dev/658
 
-    There's an ordered container
+        # Also: https://bugs.launchpad.net/zope.copypastemove/+bug/98385
+        provideAdapter(ObjectMover)
 
-        >>> from zope.container.ordered import OrderedContainer
-        >>> container = OrderedContainer()
+        # There's an ordered container
 
-        >>> from zope.container.contained import Contained
-        >>> class Obj(Contained):
-        ...     def __init__(self, title):
-        ...         self.title = title
-        ...     def __repr__(self):
-        ...         return self.title
-        >>> container['foo'] = Obj('Foo')
-        >>> container['bar'] = Obj('Bar')
-        >>> container['baz'] = Obj('Baz')
+        from zope.container.ordered import OrderedContainer
+        container = OrderedContainer()
 
-    with a custom name chooser
+        class Obj(Contained):
+            def __init__(self, title):
+                self.title = title
 
-        >>> import codecs
-        >>> from zope.interface import implementer, Interface
-        >>> from zope.container.interfaces import INameChooser
-        >>> class IMyContainer(Interface): pass
-        >>> @adapter(IMyContainer)
-        ... @implementer(INameChooser)
-        ... class MyNameChooser(object):
-        ...     def __init__(self, container):
-        ...         self.container = container
-        ...     def chooseName(self, name, obj):
-        ...         return codecs.getencoder('rot-13')(name)[0]
-        >>> provideAdapter(MyNameChooser)
+        objects = [Obj('Foo'), Obj('Bar'), Obj('Baz')]
+        container['foo'] = objects[0]
+        container['bar'] = objects[1]
+        container['baz'] = objects[2]
 
-        >>> from zope.interface import alsoProvides
-        >>> alsoProvides(container, IMyContainer)
+        # with a custom name chooser
 
-    OrderedContainerItemRenamer renames and preserves the order of items
+        import codecs
+        from zope.interface import implementer, Interface
+        from zope.container.interfaces import INameChooser
+        class IMyContainer(Interface):
+            "An interface"
+        @adapter(IMyContainer)
+        @implementer(INameChooser)
+        class MyNameChooser(object):
+            def __init__(self, container):
+                self.container = container
+            def chooseName(self, name, obj):
+                return codecs.getencoder('rot-13')(name)[0]
+        provideAdapter(MyNameChooser)
 
-        >>> from zope.copypastemove import OrderedContainerItemRenamer
-        >>> renamer = OrderedContainerItemRenamer(container)
-        >>> renamer.renameItem('bar', 'quux')
-        'dhhk'
+        from zope.interface import alsoProvides
+        alsoProvides(container, IMyContainer)
 
-        >>> list(container.keys())
-        ['foo', 'dhhk', 'baz']
-        >>> list(container.values())
-        [Foo, Bar, Baz]
+        # OrderedContainerItemRenamer renames and preserves the order of items
 
-    """
+        from zope.copypastemove import OrderedContainerItemRenamer
+        renamer = OrderedContainerItemRenamer(container)
+        self.assertEqual(renamer.renameItem('bar', 'quux'),
+                         u'dhhk')
+
+        self.assertEqual(list(container.keys()),
+                         [u'foo', u'dhhk', u'baz'])
+        self.assertEqual(container.values(),
+                         objects)
 
 def test_suite():
-    flags = \
-        doctest.NORMALIZE_WHITESPACE | \
-        doctest.ELLIPSIS | \
-        doctest.IGNORE_EXCEPTION_DETAIL
+    flags = (doctest.NORMALIZE_WHITESPACE
+             | doctest.ELLIPSIS
+             | doctest.IGNORE_EXCEPTION_DETAIL)
     return unittest.TestSuite((
-            unittest.makeSuite(RenamerTest),
-            doctest.DocTestSuite('zope.copypastemove',
-                         setUp=setUp, tearDown=testing.tearDown,
-                         checker=checker, optionflags=flags),
-            doctest.DocTestSuite(setUp=setUp, tearDown=testing.tearDown),
-            ))
+        unittest.defaultTestLoader.loadTestsFromName(__name__),
+        doctest.DocTestSuite(
+            'zope.copypastemove',
+            setUp=globalSetUp, tearDown=testing.tearDown,
+            checker=checker, optionflags=flags),
+    ))
