@@ -1,16 +1,17 @@
-Changes
-=======
+=========
+ Changes
+=========
 
 4.1.0 (unreleased)
-------------------
+==================
 
-- Add support for Python 3.5.
+- Add support for Python 3.5 and 3.6.
 
-- Drop support for Python 2.6.
+- Drop support for Python 2.6 and 3.3.
 
 
 4.0.0 (2014-12-24)
-------------------
+==================
 
 - Add support for PyPy.
 
@@ -20,7 +21,7 @@ Changes
 
 
 4.0.0a1 (2013-02-24)
---------------------
+====================
 
 - Add support for Python 3.3.
 
@@ -37,7 +38,7 @@ Changes
 
 
 3.8.0 (2010-09-14)
-------------------
+==================
 
 - Add a test that makes sure that dublin core meta data of folder contents
   get updated when the folder gets copied. (Requires `zope.dublincore` 3.8
@@ -45,7 +46,7 @@ Changes
 
 
 3.7.0 (2010-09-14)
-------------------
+==================
 
 - Honor the name given by the ``IObjectMover`` in
   ``OrderedContainerItemRenamer.renameItem``. It now returns the new of the
@@ -62,21 +63,21 @@ Changes
 - Move ``zope.copypastemove``-related tests from ``zope.container`` here.
 
 3.6.0 (2009-12-16)
-------------------
+==================
 
 - Favor ``zope.principalannotation`` over its ``zope.app`` variant.
 
 - Avoid ``zope.app.component`` and testing dependencies.
 
 3.5.2 (2009-08-15)
-------------------
+==================
 
 - Fix documentation for the ``IObjectCopier.copyTo`` method.
 
 - Add a missing dependency on ``zope.app.component``.
 
 3.5.1 (2009-02-09)
-------------------
+==================
 
 - Use the new ``zope.copy`` package for ObjectCopier to provide pluggable
   copying mechanism that is not dependent on ``zope.location`` hardly.
@@ -87,22 +88,22 @@ Changes
   place is preferred.
 
 3.5.0 (2009-01-31)
-------------------
+==================
 
 - Use ``zope.container`` instead of ``zope.app.container``.
 
 3.4.1 (2009-01-26)
-------------------
+==================
 
 - Move the test dependencies to a ``test`` extra requirement.
 
 3.4.0 (2007-09-28)
-------------------
+==================
 
 - No further changes since 3.4.0a1.
 
 3.4.0a1 (2007-04-22)
---------------------
+====================
 
 - Initial release as a separate project, corresponds to
   ``zope.copypastemove`` from Zope 3.4.0a1
