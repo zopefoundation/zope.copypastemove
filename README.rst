@@ -10,7 +10,7 @@
         :target: https://pypi.org/project/zope.copypastemove/
         :alt: Supported Python versions
 
-.. image:: https://travis-ci.org/zopefoundation/zope.copypastemove.png?branch=master
+.. image:: https://travis-ci.org/zopefoundation/zope.copypastemove.svg?branch=master
         :target: https://travis-ci.org/zopefoundation/zope.copypastemove
 
 .. image:: https://coveralls.io/repos/github/zopefoundation/zope.copypastemove/badge.svg?branch=master
