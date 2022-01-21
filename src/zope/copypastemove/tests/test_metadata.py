@@ -83,4 +83,3 @@ class CopyCreationTimeTest(zope.container.testing.ContainerPlacefulSetup,
         subfolder_copy = traverse(self.rootFolder, 'folder-copy/folder1_1')
         self.assertTrue(isinstance(IZopeDublinCore(subfolder_copy).created,
                                    datetime.datetime))
-

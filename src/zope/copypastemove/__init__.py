@@ -37,6 +37,7 @@ from zope.container.interfaces import IContained
 from zope.container.interfaces import INameChooser
 from zope.container.constraints import checkObject
 
+
 @adapter(IContained)
 @implementer(IObjectMover)
 class ObjectMover(object):
@@ -136,7 +137,6 @@ class ObjectMover(object):
     ...     def __repr__(self):
     ...         return 'C1'
 
-    >>> from zope.container.constraints import checkObject
     >>> container3 = C1()
     >>> mover.moveableTo(container3, 'ZDummy')
     False
@@ -171,7 +171,7 @@ class ObjectMover(object):
 
     def __init__(self, object):
         self.context = object
-        self.__parent__ = object # TODO: see if we can automate this
+        self.__parent__ = object  # TODO: see if we can automate this
 
     def moveTo(self, target, new_name=None):
         """Move this object to the `target` given.
@@ -220,6 +220,7 @@ class ObjectMover(object):
         except Invalid:
             return False
         return True
+
 
 @adapter(IContained)
 @implementer(IObjectCopier)
@@ -330,7 +331,6 @@ class ObjectCopier(object):
     ...     def __repr__(self):
     ...         return 'C1'
 
-    >>> from zope.container.constraints import checkObject
     >>> container3 = C1()
     >>> copier.copyableTo(container3, 'ZDummy')
     False
@@ -365,7 +365,7 @@ class ObjectCopier(object):
 
     def __init__(self, object):
         self.context = object
-        self.__parent__ = object # TODO: see if we can automate this
+        self.__parent__ = object  # TODO: see if we can automate this
 
     def copyTo(self, target, new_name=None):
         """Copy this object to the `target` given.
@@ -446,7 +446,8 @@ class ContainerItemRenamer(object):
       >>> container['bar'] is foo
       True
 
-    If the item being renamed isn't in the container, a NotFoundError is raised:
+    If the item being renamed isn't in the container, a NotFoundError is
+    raised:
 
       >>> renamer.renameItem('foo', 'bar') # doctest:+ELLIPSIS
       Traceback (most recent call last):
@@ -570,7 +571,7 @@ class PrincipalClipboard(object):
         contents = self.getContents()
         actions = []
         for target in targets:
-            actions.append({'action':action, 'target':target})
+            actions.append({'action': action, 'target': target})
         self.context['clipboard'] = contents + tuple(actions)
 
     def setContents(self, clipboard):

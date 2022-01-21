@@ -33,14 +33,17 @@ checker = renormalizing.RENormalizing([
      r"\1"),
 ])
 
+
 class TestContainer(SampleContainer):
     pass
+
 
 @adapter(TestContainer)
 class ObstinateNameChooser(NameChooser):
 
     def chooseName(self, name, ob):
         return u'foobar'
+
 
 class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
 
@@ -58,12 +61,15 @@ class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
         renamer.renameItem(u'foobar', u'newname')
         self.assertEqual(list(container), [u'foobar'])
 
+
 container_setup = PlacelessSetup()
+
 
 def globalSetUp(test):
     testing.setUp()
     eventtesting.setUp()
     container_setup.setUp()
+
 
 class TestRename(unittest.TestCase):
 
@@ -101,6 +107,7 @@ class TestRename(unittest.TestCase):
         import codecs
         from zope.interface import implementer, Interface
         from zope.container.interfaces import INameChooser
+
         class IMyContainer(Interface):
             "An interface"
         @adapter(IMyContainer)
@@ -108,6 +115,7 @@ class TestRename(unittest.TestCase):
         class MyNameChooser(object):
             def __init__(self, container):
                 self.container = container
+
             def chooseName(self, name, obj):
                 return codecs.getencoder('rot-13')(name)[0]
         provideAdapter(MyNameChooser)
@@ -126,6 +134,7 @@ class TestRename(unittest.TestCase):
                          [u'foo', u'dhhk', u'baz'])
         self.assertEqual(container.values(),
                          objects)
+
 
 def test_suite():
     flags = (doctest.NORMALIZE_WHITESPACE
