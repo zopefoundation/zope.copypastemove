@@ -47,13 +47,13 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
         annotations = annotationutil.getAnnotations(user)
         clipboard = IPrincipalClipboard(annotations)
         clipboard.addItems('move', ['bla', 'bla/foo', 'bla/bar'])
-        expected = ({'action':'move', 'target':'bla'},
-                    {'action':'move', 'target':'bla/foo'},
-                    {'action':'move', 'target':'bla/bar'})
+        expected = ({'action': 'move', 'target': 'bla'},
+                    {'action': 'move', 'target': 'bla/foo'},
+                    {'action': 'move', 'target': 'bla/bar'})
 
         self.assertEqual(clipboard.getContents(), expected)
         clipboard.addItems('copy', ['bla'])
-        expected = expected + ({'action':'copy', 'target':'bla'},)
+        expected = expected + ({'action': 'copy', 'target': 'bla'},)
         self.assertEqual(clipboard.getContents(), expected)
 
     def testSetContents(self):
@@ -63,13 +63,13 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
         annotations = annotationutil.getAnnotations(user)
         clipboard = IPrincipalClipboard(annotations)
 
-        expected = ({'action':'move', 'target':'bla'},
-                    {'action':'move', 'target':'bla/foo'},
-                    {'action':'move', 'target':'bla/bar'})
+        expected = ({'action': 'move', 'target': 'bla'},
+                    {'action': 'move', 'target': 'bla/foo'},
+                    {'action': 'move', 'target': 'bla/bar'})
         clipboard.setContents(expected)
         self.assertEqual(clipboard.getContents(), expected)
         clipboard.addItems('copy', ['bla'])
-        expected = expected + ({'action':'copy', 'target':'bla'},)
+        expected = expected + ({'action': 'copy', 'target': 'bla'},)
         self.assertEqual(clipboard.getContents(), expected)
 
     def testClearContents(self):
@@ -80,6 +80,7 @@ class PrincipalClipboardTest(PlacelessSetup, unittest.TestCase):
         clipboard = IPrincipalClipboard(annotations)
         clipboard.clearContents()
         self.assertEqual(clipboard.getContents(), ())
+
 
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)

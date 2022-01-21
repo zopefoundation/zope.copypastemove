@@ -17,6 +17,7 @@ __docformat__ = 'restructuredtext'
 
 from zope.interface import Interface, implementer
 
+
 class IObjectMover(Interface):
     """Use `IObjectMover(obj)` to move an object somewhere."""
 
@@ -35,6 +36,7 @@ class IObjectMover(Interface):
         Returns ``True`` if it can be moved there. Otherwise, returns
         ``False``.
         """
+
 
 class IObjectCopier(Interface):
 
@@ -56,6 +58,7 @@ class IObjectCopier(Interface):
         ``False``.
         """
 
+
 class IContainerItemRenamer(Interface):
 
     def renameItem(oldName, newName):
@@ -65,6 +68,7 @@ class IContainerItemRenamer(Interface):
 
         Raises DuplicationError if newName is already used in the container.
         """
+
 
 class IPrincipalClipboard(Interface):
     """Interface for adapters that store/retrieve clipboard information
@@ -86,8 +90,10 @@ class IPrincipalClipboard(Interface):
     def getContents():
         """Return the contents of the clipboard"""
 
+
 class IItemNotFoundError(Interface):
     pass
+
 
 @implementer(IItemNotFoundError)
 class ItemNotFoundError(LookupError):

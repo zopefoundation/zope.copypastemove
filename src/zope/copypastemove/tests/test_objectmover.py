@@ -33,10 +33,12 @@ checker = renormalizing.RENormalizing([
      r"\1"),
     (re.compile('u(".*?")'),
      r"\1"),
-    ])
+])
+
 
 class File(object):
     pass
+
 
 def test_move_events():
     """
@@ -230,7 +232,7 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(ObjectMoverTest),
         doctest.DocTestSuite(
-                    setUp=testing.ContainerPlacefulSetup().setUp,
-                    tearDown=testing.ContainerPlacefulSetup().tearDown,
-                    checker=checker),
-        ))
+            setUp=testing.ContainerPlacefulSetup().setUp,
+            tearDown=testing.ContainerPlacefulSetup().tearDown,
+            checker=checker),
+    ))
