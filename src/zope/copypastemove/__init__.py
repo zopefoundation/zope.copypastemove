@@ -33,7 +33,7 @@ from zope.copypastemove.interfaces import ItemNotFoundError
 
 from zope.container.sample import SampleContainer
 from zope.container.interfaces import IContainer, IOrderedContainer
-from zope.container.interfaces import IContained
+from zope.location.interfaces import IContained
 from zope.container.interfaces import INameChooser
 from zope.container.constraints import checkObject
 
@@ -418,7 +418,7 @@ class ContainerItemRenamer(object):
     This adapter uses IObjectMover to move an item within the same container
     to a different name. We need to first setup an adapter for IObjectMover:
 
-      >>> from zope.container.interfaces import IContained
+      >>> from zope.location.interfaces import IContained
       >>> gsm = zope.component.getGlobalSiteManager()
       >>> gsm.registerAdapter(ObjectMover, (IContained, ), IObjectMover)
 
@@ -489,7 +489,7 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
     To illustrate, we need to setup an IObjectMover, which is used in the
     renaming:
 
-      >>> from zope.container.interfaces import IContained
+      >>> from zope.location.interfaces import IContained
       >>> gsm = zope.component.getGlobalSiteManager()
       >>> gsm.registerAdapter(ObjectMover, (IContained, ), IObjectMover)
 
