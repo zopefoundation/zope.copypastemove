@@ -57,7 +57,7 @@ TESTS_REQUIRE = ZCML_REQUIRES + [
 ]
 
 setup(name='zope.copypastemove',
-      version='4.2.1.dev0',
+      version='4.2.1',
       url='http://github.com/zopefoundation/zope.copypastemove',
       license='ZPL 2.1',
       author='Zope Foundation and Contributors',
