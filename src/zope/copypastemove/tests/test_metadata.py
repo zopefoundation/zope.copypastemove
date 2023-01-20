@@ -36,7 +36,7 @@ class CopyCreationTimeTest(zope.container.testing.ContainerPlacefulSetup,
                            unittest.TestCase):
 
     def setUp(self):
-        super(CopyCreationTimeTest, self).setUp()
+        super().setUp()
         # We need a folder hierarchy for copying:
         self.buildFolders()
         # We need the default zope.dublincore adapters:

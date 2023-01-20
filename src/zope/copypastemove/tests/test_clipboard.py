@@ -25,7 +25,7 @@ from zope.copypastemove import PrincipalClipboard
 from zope.copypastemove.interfaces import IPrincipalClipboard
 
 
-class PrincipalStub(object):
+class PrincipalStub:
 
     def __init__(self, id):
         self.id = id

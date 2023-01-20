@@ -14,7 +14,6 @@
 """Test renaming of components
 """
 import doctest
-import re
 import unittest
 
 from zope.component import adapter
@@ -26,20 +25,10 @@ from zope.container.contained import NameChooser
 from zope.container.sample import SampleContainer
 from zope.container.testing import ContainerPlacefulSetup
 from zope.container.testing import PlacelessSetup
-from zope.testing import renormalizing
 
 from zope.copypastemove import ContainerItemRenamer
 from zope.copypastemove import ObjectMover
 from zope.copypastemove.interfaces import IContainerItemRenamer
-
-
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"),
-     r"\1"),
-    (re.compile('u(".*?")'),
-     r"\1"),
-])
 
 
 class TestContainer(SampleContainer):
@@ -50,7 +39,7 @@ class TestContainer(SampleContainer):
 class ObstinateNameChooser(NameChooser):
 
     def chooseName(self, name, ob):
-        return u'foobar'
+        return 'foobar'
 
 
 class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
@@ -63,11 +52,11 @@ class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
 
     def test_obstinatenamechooser(self):
         container = TestContainer()
-        container[u'foobar'] = Contained()
+        container['foobar'] = Contained()
         renamer = IContainerItemRenamer(container)
 
-        renamer.renameItem(u'foobar', u'newname')
-        self.assertEqual(list(container), [u'foobar'])
+        renamer.renameItem('foobar', 'newname')
+        self.assertEqual(list(container), ['foobar'])
 
 
 container_setup = PlacelessSetup()
@@ -122,7 +111,7 @@ class TestRename(unittest.TestCase):
             "An interface"
         @adapter(IMyContainer)
         @implementer(INameChooser)
-        class MyNameChooser(object):
+        class MyNameChooser:
             def __init__(self, container):
                 self.container = container
 
@@ -138,10 +127,10 @@ class TestRename(unittest.TestCase):
         from zope.copypastemove import OrderedContainerItemRenamer
         renamer = OrderedContainerItemRenamer(container)
         self.assertEqual(renamer.renameItem('bar', 'quux'),
-                         u'dhhk')
+                         'dhhk')
 
         self.assertEqual(list(container.keys()),
-                         [u'foo', u'dhhk', u'baz'])
+                         ['foo', 'dhhk', 'baz'])
         self.assertEqual(container.values(),
                          objects)
 
@@ -155,5 +144,5 @@ def test_suite():
         doctest.DocTestSuite(
             'zope.copypastemove',
             setUp=globalSetUp, tearDown=testing.tearDown,
-            checker=checker, optionflags=flags),
+            optionflags=flags),
     ))
