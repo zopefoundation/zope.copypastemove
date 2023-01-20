@@ -15,7 +15,8 @@
 """
 __docformat__ = 'restructuredtext'
 
-from zope.interface import Interface, implementer
+from zope.interface import Interface
+from zope.interface import implementer
 
 
 class IObjectMover(Interface):

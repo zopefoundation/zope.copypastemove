@@ -16,26 +16,27 @@
 __docformat__ = 'restructuredtext'
 
 import zope.component
-from zope.interface import implementer, Invalid
-from zope.exceptions import DuplicationError
+from zope.annotation.interfaces import IAnnotations
 from zope.component import adapter
+from zope.container.constraints import checkObject
+from zope.container.interfaces import IContainer
+from zope.container.interfaces import INameChooser
+from zope.container.interfaces import IOrderedContainer
+from zope.container.sample import SampleContainer
 from zope.copy import copy
 from zope.event import notify
-from zope.location.interfaces import ISublocations
-from zope.annotation.interfaces import IAnnotations
+from zope.exceptions import DuplicationError
+from zope.interface import Invalid
+from zope.interface import implementer
 from zope.lifecycleevent import ObjectCopiedEvent
+from zope.location.interfaces import IContained
+from zope.location.interfaces import ISublocations
 
-from zope.copypastemove.interfaces import IObjectMover
-from zope.copypastemove.interfaces import IObjectCopier
 from zope.copypastemove.interfaces import IContainerItemRenamer
+from zope.copypastemove.interfaces import IObjectCopier
+from zope.copypastemove.interfaces import IObjectMover
 from zope.copypastemove.interfaces import IPrincipalClipboard
 from zope.copypastemove.interfaces import ItemNotFoundError
-
-from zope.container.sample import SampleContainer
-from zope.container.interfaces import IContainer, IOrderedContainer
-from zope.location.interfaces import IContained
-from zope.container.interfaces import INameChooser
-from zope.container.constraints import checkObject
 
 
 @adapter(IContained)

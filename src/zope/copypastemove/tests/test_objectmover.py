@@ -18,14 +18,15 @@ import re
 import unittest
 
 import zope.component
-from zope.traversing.api import traverse
 from zope.component.eventtesting import clearEvents
 from zope.component.eventtesting import getEvents
+from zope.container import testing
+from zope.testing import renormalizing
+from zope.traversing.api import traverse
+
 from zope.copypastemove import ObjectMover
 from zope.copypastemove.interfaces import IObjectMover
-from zope.testing import renormalizing
 
-from zope.container import testing
 
 checker = renormalizing.RENormalizing([
     # Python 3 unicode removed the "u".

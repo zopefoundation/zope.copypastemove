@@ -17,13 +17,21 @@ import doctest
 import re
 import unittest
 
-from zope.component import testing, eventtesting, provideAdapter, adapter
-from zope.container.testing import PlacelessSetup, ContainerPlacefulSetup
-from zope.copypastemove import ContainerItemRenamer, ObjectMover
-from zope.copypastemove.interfaces import IContainerItemRenamer
-from zope.container.contained import Contained, NameChooser
+from zope.component import adapter
+from zope.component import eventtesting
+from zope.component import provideAdapter
+from zope.component import testing
+from zope.container.contained import Contained
+from zope.container.contained import NameChooser
 from zope.container.sample import SampleContainer
+from zope.container.testing import ContainerPlacefulSetup
+from zope.container.testing import PlacelessSetup
 from zope.testing import renormalizing
+
+from zope.copypastemove import ContainerItemRenamer
+from zope.copypastemove import ObjectMover
+from zope.copypastemove.interfaces import IContainerItemRenamer
+
 
 checker = renormalizing.RENormalizing([
     # Python 3 unicode removed the "u".
@@ -105,8 +113,10 @@ class TestRename(unittest.TestCase):
         # with a custom name chooser
 
         import codecs
-        from zope.interface import implementer, Interface
+
         from zope.container.interfaces import INameChooser
+        from zope.interface import Interface
+        from zope.interface import implementer
 
         class IMyContainer(Interface):
             "An interface"
