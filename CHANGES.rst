@@ -2,8 +2,8 @@
  Changes
 =========
 
-4.2.2 (unreleased)
-==================
+5.0 (unreleased)
+================
 
 - Nothing changed yet.
 
