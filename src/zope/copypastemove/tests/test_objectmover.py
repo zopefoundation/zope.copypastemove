@@ -14,29 +14,19 @@
 """Object Mover Tests
 """
 import doctest
-import re
 import unittest
 
 import zope.component
-from zope.traversing.api import traverse
 from zope.component.eventtesting import clearEvents
 from zope.component.eventtesting import getEvents
+from zope.container import testing
+from zope.traversing.api import traverse
+
 from zope.copypastemove import ObjectMover
 from zope.copypastemove.interfaces import IObjectMover
-from zope.testing import renormalizing
-
-from zope.container import testing
-
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"),
-     r"\1"),
-    (re.compile('u(".*?")'),
-     r"\1"),
-])
 
 
-class File(object):
+class File:
     pass
 
 
@@ -55,8 +45,8 @@ def test_move_events():
     Prepare some objects::
 
       >>> folder = SampleContainer()
-      >>> root[u'foo'] = File()
-      >>> root[u'folder'] = folder
+      >>> root['foo'] = File()
+      >>> root['folder'] = folder
       >>> list(folder.keys())
       []
       >>> foo = traverse(root, 'foo') # wrap in ContainedProxy
@@ -67,15 +57,15 @@ def test_move_events():
       >>> mover = IObjectMover(foo)
       >>> mover.moveableTo(folder)
       True
-      >>> mover.moveTo(folder, u'bar')
-      u'bar'
+      >>> mover.moveTo(folder, 'bar')
+      'bar'
 
     Check that the move has been done::
 
       >>> list(root.keys())
-      [u'folder']
+      ['folder']
       >>> list(folder.keys())
-      [u'bar']
+      ['bar']
 
     Check what events have been sent::
 
@@ -86,7 +76,7 @@ def test_move_events():
     Verify that the ObjectMovedEvent includes the correct data::
 
       >>> events[0].oldName, events[0].newName
-      (u'foo', u'bar')
+      ('foo', 'bar')
       >>> events[0].oldParent is root
       True
       >>> events[0].newParent is folder
@@ -230,9 +220,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(ObjectMoverTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(ObjectMoverTest),
         doctest.DocTestSuite(
             setUp=testing.ContainerPlacefulSetup().setUp,
-            tearDown=testing.ContainerPlacefulSetup().tearDown,
-            checker=checker),
+            tearDown=testing.ContainerPlacefulSetup().tearDown),
     ))

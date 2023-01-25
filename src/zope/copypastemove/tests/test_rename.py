@@ -14,24 +14,21 @@
 """Test renaming of components
 """
 import doctest
-import re
 import unittest
 
-from zope.component import testing, eventtesting, provideAdapter, adapter
-from zope.container.testing import PlacelessSetup, ContainerPlacefulSetup
-from zope.copypastemove import ContainerItemRenamer, ObjectMover
-from zope.copypastemove.interfaces import IContainerItemRenamer
-from zope.container.contained import Contained, NameChooser
+from zope.component import adapter
+from zope.component import eventtesting
+from zope.component import provideAdapter
+from zope.component import testing
+from zope.container.contained import Contained
+from zope.container.contained import NameChooser
 from zope.container.sample import SampleContainer
-from zope.testing import renormalizing
+from zope.container.testing import ContainerPlacefulSetup
+from zope.container.testing import PlacelessSetup
 
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"),
-     r"\1"),
-    (re.compile('u(".*?")'),
-     r"\1"),
-])
+from zope.copypastemove import ContainerItemRenamer
+from zope.copypastemove import ObjectMover
+from zope.copypastemove.interfaces import IContainerItemRenamer
 
 
 class TestContainer(SampleContainer):
@@ -42,7 +39,7 @@ class TestContainer(SampleContainer):
 class ObstinateNameChooser(NameChooser):
 
     def chooseName(self, name, ob):
-        return u'foobar'
+        return 'foobar'
 
 
 class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
@@ -55,11 +52,11 @@ class RenamerTest(ContainerPlacefulSetup, unittest.TestCase):
 
     def test_obstinatenamechooser(self):
         container = TestContainer()
-        container[u'foobar'] = Contained()
+        container['foobar'] = Contained()
         renamer = IContainerItemRenamer(container)
 
-        renamer.renameItem(u'foobar', u'newname')
-        self.assertEqual(list(container), [u'foobar'])
+        renamer.renameItem('foobar', 'newname')
+        self.assertEqual(list(container), ['foobar'])
 
 
 container_setup = PlacelessSetup()
@@ -105,14 +102,16 @@ class TestRename(unittest.TestCase):
         # with a custom name chooser
 
         import codecs
-        from zope.interface import implementer, Interface
+
         from zope.container.interfaces import INameChooser
+        from zope.interface import Interface
+        from zope.interface import implementer
 
         class IMyContainer(Interface):
             "An interface"
         @adapter(IMyContainer)
         @implementer(INameChooser)
-        class MyNameChooser(object):
+        class MyNameChooser:
             def __init__(self, container):
                 self.container = container
 
@@ -128,10 +127,10 @@ class TestRename(unittest.TestCase):
         from zope.copypastemove import OrderedContainerItemRenamer
         renamer = OrderedContainerItemRenamer(container)
         self.assertEqual(renamer.renameItem('bar', 'quux'),
-                         u'dhhk')
+                         'dhhk')
 
         self.assertEqual(list(container.keys()),
-                         [u'foo', u'dhhk', u'baz'])
+                         ['foo', 'dhhk', 'baz'])
         self.assertEqual(container.values(),
                          objects)
 
@@ -145,5 +144,5 @@ def test_suite():
         doctest.DocTestSuite(
             'zope.copypastemove',
             setUp=globalSetUp, tearDown=testing.tearDown,
-            checker=checker, optionflags=flags),
+            optionflags=flags),
     ))

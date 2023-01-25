@@ -16,31 +16,32 @@
 __docformat__ = 'restructuredtext'
 
 import zope.component
-from zope.interface import implementer, Invalid
-from zope.exceptions import DuplicationError
+from zope.annotation.interfaces import IAnnotations
 from zope.component import adapter
+from zope.container.constraints import checkObject
+from zope.container.interfaces import IContainer
+from zope.container.interfaces import INameChooser
+from zope.container.interfaces import IOrderedContainer
+from zope.container.sample import SampleContainer
 from zope.copy import copy
 from zope.event import notify
-from zope.location.interfaces import ISublocations
-from zope.annotation.interfaces import IAnnotations
+from zope.exceptions import DuplicationError
+from zope.interface import Invalid
+from zope.interface import implementer
 from zope.lifecycleevent import ObjectCopiedEvent
+from zope.location.interfaces import IContained
+from zope.location.interfaces import ISublocations
 
-from zope.copypastemove.interfaces import IObjectMover
-from zope.copypastemove.interfaces import IObjectCopier
 from zope.copypastemove.interfaces import IContainerItemRenamer
+from zope.copypastemove.interfaces import IObjectCopier
+from zope.copypastemove.interfaces import IObjectMover
 from zope.copypastemove.interfaces import IPrincipalClipboard
 from zope.copypastemove.interfaces import ItemNotFoundError
-
-from zope.container.sample import SampleContainer
-from zope.container.interfaces import IContainer, IOrderedContainer
-from zope.location.interfaces import IContained
-from zope.container.interfaces import INameChooser
-from zope.container.constraints import checkObject
 
 
 @adapter(IContained)
 @implementer(IObjectMover)
-class ObjectMover(object):
+class ObjectMover:
     """Adapter for moving objects between containers
 
     To use an object mover, pass a contained `object` to the class.
@@ -51,7 +52,7 @@ class ObjectMover(object):
     >>> from zope.container.contained import Contained
     >>> ob = Contained()
     >>> container = ExampleContainer()
-    >>> container[u'foo'] = ob
+    >>> container['foo'] = ob
     >>> mover = ObjectMover(ob)
 
     In addition to moving objects, object movers can tell you if the
@@ -76,37 +77,37 @@ class ObjectMover(object):
     the mover to do so:
 
     >>> mover.moveTo(container2)
-    u'foo'
+    'foo'
     >>> list(container)
     []
     >>> list(container2)
-    [u'foo']
+    ['foo']
     >>> ob.__parent__ is container2
     True
 
     We can also specify a name:
 
-    >>> mover.moveTo(container2, u'bar')
-    u'bar'
+    >>> mover.moveTo(container2, 'bar')
+    'bar'
     >>> list(container2)
-    [u'bar']
+    ['bar']
     >>> ob.__parent__ is container2
     True
     >>> ob.__name__
-    u'bar'
+    'bar'
 
     But we may not use the same name given, if the name is already in
     use:
 
-    >>> container2[u'splat'] = 1
-    >>> mover.moveTo(container2, u'splat')
-    u'splat_'
+    >>> container2['splat'] = 1
+    >>> mover.moveTo(container2, 'splat')
+    'splat_'
     >>> l = list(container2)
     >>> l.sort()
     >>> l
-    [u'splat', u'splat_']
+    ['splat', 'splat_']
     >>> ob.__name__
-    u'splat_'
+    'splat_'
 
 
     If we try to move to an invalid container, we'll get an error:
@@ -224,7 +225,7 @@ class ObjectMover(object):
 
 @adapter(IContained)
 @implementer(IObjectCopier)
-class ObjectCopier(object):
+class ObjectCopier:
     """Adapter for copying objects between containers
 
     To use an object copier, pass a contained `object` to the class.
@@ -234,7 +235,7 @@ class ObjectCopier(object):
     >>> from zope.container.contained import Contained
     >>> ob = Contained()
     >>> container = ExampleContainer()
-    >>> container[u'foo'] = ob
+    >>> container['foo'] = ob
     >>> copier = ObjectCopier(ob)
 
     In addition to moving objects, object copiers can tell you if the
@@ -259,49 +260,49 @@ class ObjectCopier(object):
     the copier to do so:
 
     >>> copier.copyTo(container2)
-    u'foo'
+    'foo'
     >>> list(container)
-    [u'foo']
+    ['foo']
     >>> list(container2)
-    [u'foo']
+    ['foo']
     >>> ob.__parent__ is container
     True
-    >>> container2[u'foo'] is ob
+    >>> container2['foo'] is ob
     False
-    >>> container2[u'foo'].__parent__ is container2
+    >>> container2['foo'].__parent__ is container2
     True
-    >>> container2[u'foo'].__name__
-    u'foo'
+    >>> container2['foo'].__name__
+    'foo'
 
     We can also specify a name:
 
-    >>> copier.copyTo(container2, u'bar')
-    u'bar'
+    >>> copier.copyTo(container2, 'bar')
+    'bar'
     >>> l = list(container2)
     >>> l.sort()
     >>> l
-    [u'bar', u'foo']
+    ['bar', 'foo']
 
     >>> ob.__parent__ is container
     True
-    >>> container2[u'bar'] is ob
+    >>> container2['bar'] is ob
     False
-    >>> container2[u'bar'].__parent__ is container2
+    >>> container2['bar'].__parent__ is container2
     True
-    >>> container2[u'bar'].__name__
-    u'bar'
+    >>> container2['bar'].__name__
+    'bar'
 
     But we may not use the same name given, if the name is already in
     use:
 
-    >>> copier.copyTo(container2, u'bar')
-    u'bar_'
+    >>> copier.copyTo(container2, 'bar')
+    'bar_'
     >>> l = list(container2)
     >>> l.sort()
     >>> l
-    [u'bar', u'bar_', u'foo']
-    >>> container2[u'bar_'].__name__
-    u'bar_'
+    ['bar', 'bar_', 'foo']
+    >>> container2['bar_'].__name__
+    'bar_'
 
 
     If we try to copy to an invalid container, we'll get an error:
@@ -412,7 +413,7 @@ class ObjectCopier(object):
 
 @adapter(IContainer)
 @implementer(IContainerItemRenamer)
-class ContainerItemRenamer(object):
+class ContainerItemRenamer:
     """An IContainerItemRenamer adapter for containers.
 
     This adapter uses IObjectMover to move an item within the same container
@@ -439,7 +440,7 @@ class ContainerItemRenamer(object):
     to 'bar':
 
       >>> renamer.renameItem('foo', 'bar')
-      u'bar'
+      'bar'
       >>> container['foo'] is foo
       Traceback (most recent call last):
       KeyError: 'foo'
@@ -511,21 +512,21 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
     When we rename one of the items:
 
       >>> renamer.renameItem('1', 'I')
-      u'I'
+      'I'
 
     the order is preserved:
 
       >>> container.items()
-      [(u'I', 'Item 1'), ('2', 'Item 2'), ('3', 'Item 3')]
+      [('I', 'Item 1'), ('2', 'Item 2'), ('3', 'Item 3')]
 
     Renaming the other two items also preserves the origina order:
 
       >>> renamer.renameItem('2', 'II')
-      u'II'
+      'II'
       >>> renamer.renameItem('3', 'III')
-      u'III'
+      'III'
       >>> container.items()
-      [(u'I', 'Item 1'), (u'II', 'Item 2'), (u'III', 'Item 3')]
+      [('I', 'Item 1'), ('II', 'Item 2'), ('III', 'Item 3')]
 
     As with the standard renamer, trying to rename a non-existent item raises
     an error:
@@ -552,7 +553,7 @@ class OrderedContainerItemRenamer(ContainerItemRenamer):
 
 @adapter(IAnnotations)
 @implementer(IPrincipalClipboard)
-class PrincipalClipboard(object):
+class PrincipalClipboard:
     """Principal clipboard
 
     Clipboard information consists of mappings of

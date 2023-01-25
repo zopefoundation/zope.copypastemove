@@ -14,29 +14,19 @@
 """Object Copier Tests
 """
 import doctest
-import re
 import unittest
 
 import zope.component
-from zope.traversing.api import traverse
 from zope.component.eventtesting import clearEvents
 from zope.component.eventtesting import getEvents
+from zope.container import testing
+from zope.traversing.api import traverse
+
 from zope.copypastemove import ObjectCopier
 from zope.copypastemove.interfaces import IObjectCopier
-from zope.testing import renormalizing
-
-from zope.container import testing
-
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"),
-     r"\1"),
-    (re.compile('u(".*?")'),
-     r"\1"),
-])
 
 
-class File(object):
+class File:
     pass
 
 
@@ -55,8 +45,8 @@ def test_copy_events():
     Prepare some objects::
 
       >>> folder = SampleContainer()
-      >>> root[u'foo'] = File()
-      >>> root[u'folder'] = folder
+      >>> root['foo'] = File()
+      >>> root['folder'] = folder
       >>> list(folder.keys())
       []
       >>> foo = traverse(root, 'foo') # wrap in ContainedProxy
@@ -65,13 +55,13 @@ def test_copy_events():
 
       >>> clearEvents()
       >>> copier = IObjectCopier(foo)
-      >>> copier.copyTo(folder, u'bar')
-      u'bar'
+      >>> copier.copyTo(folder, 'bar')
+      'bar'
 
     Check that the copy has been done::
 
       >>> list(folder.keys())
-      [u'bar']
+      ['bar']
 
     Check what events have been sent::
 
@@ -81,9 +71,9 @@ def test_copy_events():
 
     Check that the ObjectCopiedEvent includes the correct data::
 
-      >>> events[0].object is folder[u'bar']
+      >>> events[0].object is folder['bar']
       True
-      >>> events[0].original is root[u'foo']
+      >>> events[0].original is root['foo']
       True
     """
 
@@ -214,9 +204,8 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(ObjectCopierTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(ObjectCopierTest),
         doctest.DocTestSuite(
             setUp=testing.ContainerPlacefulSetup().setUp,
-            tearDown=testing.ContainerPlacefulSetup().tearDown,
-            checker=checker),
+            tearDown=testing.ContainerPlacefulSetup().tearDown),
     ))

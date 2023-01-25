@@ -13,9 +13,11 @@
 ##############################################################################
 
 import unittest
-import zope.copypastemove
+
 import zope.component
 import zope.configuration.xmlconfig
+
+import zope.copypastemove
 
 
 class ZCMLTest(unittest.TestCase):

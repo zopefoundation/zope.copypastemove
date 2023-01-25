@@ -18,14 +18,14 @@ import unittest
 import zope.component
 from zope.annotation.interfaces import IAnnotations
 from zope.component.testing import PlacelessSetup
-from zope.principalannotation.utility import PrincipalAnnotationUtility
 from zope.principalannotation.interfaces import IPrincipalAnnotationUtility
+from zope.principalannotation.utility import PrincipalAnnotationUtility
 
 from zope.copypastemove import PrincipalClipboard
 from zope.copypastemove.interfaces import IPrincipalClipboard
 
 
-class PrincipalStub(object):
+class PrincipalStub:
 
     def __init__(self, id):
         self.id = id

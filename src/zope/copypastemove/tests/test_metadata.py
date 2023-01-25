@@ -15,6 +15,7 @@
 
 import datetime
 import unittest
+
 import zope.annotation
 import zope.annotation.attribute
 import zope.component
@@ -22,19 +23,20 @@ import zope.container.contained
 import zope.container.interfaces
 import zope.container.sample
 import zope.container.testing
-import zope.copypastemove
 import zope.dublincore.testing
 import zope.dublincore.timeannotators
 import zope.lifecycleevent.interfaces
 import zope.location.interfaces
 import zope.traversing.api
 
+import zope.copypastemove
+
 
 class CopyCreationTimeTest(zope.container.testing.ContainerPlacefulSetup,
                            unittest.TestCase):
 
     def setUp(self):
-        super(CopyCreationTimeTest, self).setUp()
+        super().setUp()
         # We need a folder hierarchy for copying:
         self.buildFolders()
         # We need the default zope.dublincore adapters:
