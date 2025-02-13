@@ -70,18 +70,22 @@ class CopyCreationTimeTest(zope.container.testing.ContainerPlacefulSetup,
         # Neither the original folder nor one of its subfolders have a
         # creation date as there was no event on creation:
         folder = traverse(self.rootFolder, 'folder1')
-        self.assertTrue(IZopeDublinCore(folder).created is None)
+        self.assertIsNone(IZopeDublinCore(folder).created)
         subfolder = traverse(self.rootFolder, 'folder1/folder1_1')
-        self.assertTrue(IZopeDublinCore(subfolder).created is None)
+        self.assertIsNone(IZopeDublinCore(subfolder).created)
 
         # After copying the folder, it has a creation date:
         copier = zope.copypastemove.ObjectCopier(folder)
         copier.copyTo(self.rootFolder, 'folder-copy')
         folder_copy = traverse(self.rootFolder, 'folder-copy')
-        self.assertTrue(isinstance(IZopeDublinCore(folder_copy).created,
-                                   datetime.datetime))
+        self.assertIsInstance(
+            IZopeDublinCore(folder_copy).created,
+            datetime.datetime
+        )
 
         # The subfolder has a creation date, too:
         subfolder_copy = traverse(self.rootFolder, 'folder-copy/folder1_1')
-        self.assertTrue(isinstance(IZopeDublinCore(subfolder_copy).created,
-                                   datetime.datetime))
+        self.assertIsInstance(
+            IZopeDublinCore(subfolder_copy).created,
+            datetime.datetime
+        )

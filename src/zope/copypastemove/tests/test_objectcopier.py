@@ -92,8 +92,8 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         copier = IObjectCopier(file)
         copier.copyTo(container, 'file1')
-        self.assertTrue('file1' in container)
-        self.assertTrue('file1-2' in container)
+        self.assertIn('file1', container)
+        self.assertIn('file1-2', container)
 
     def test_copytosamewithnewname(self):
         root = self.rootFolder
@@ -102,8 +102,8 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         copier = IObjectCopier(file)
         copier.copyTo(container, 'file2')
-        self.assertTrue('file1' in container)
-        self.assertTrue('file2' in container)
+        self.assertIn('file1', container)
+        self.assertIn('file2', container)
 
     def test_copytoother(self):
         root = self.rootFolder
@@ -113,8 +113,8 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         copier = IObjectCopier(file)
         copier.copyTo(target, 'file1')
-        self.assertTrue('file1' in container)
-        self.assertTrue('file1' in target)
+        self.assertIn('file1', container)
+        self.assertIn('file1', target)
 
     def test_copytootherwithnewname(self):
         root = self.rootFolder
@@ -124,8 +124,8 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         copier = IObjectCopier(file)
         copier.copyTo(target, 'file2')
-        self.assertTrue('file1' in container)
-        self.assertTrue('file2' in target)
+        self.assertIn('file1', container)
+        self.assertIn('file2', target)
 
     def test_copytootherwithnamecollision(self):
         root = self.rootFolder
@@ -138,10 +138,10 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         copier.copyTo(target, 'file1')
         # we do it twice, just to test auto-name generation
         copier.copyTo(target, 'file1')
-        self.assertTrue('file1' in container)
-        self.assertTrue('file1' in target)
-        self.assertTrue('file1-2' in target)
-        self.assertTrue('file1-3' in target)
+        self.assertIn('file1', container)
+        self.assertIn('file1', target)
+        self.assertIn('file1-2', target)
+        self.assertIn('file1-3', target)
 
     def test_copyable(self):
         root = self.rootFolder
@@ -167,7 +167,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1')
         copier = IObjectCopier(source)
         copier.copyTo(target)
-        self.assertTrue('folder1_1' in target)
+        self.assertIn('folder1_1', target)
 
     def test_copyfoldertosame(self):
         root = self.rootFolder
@@ -175,7 +175,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1')
         copier = IObjectCopier(source)
         copier.copyTo(target)
-        self.assertTrue('folder1_1' in target)
+        self.assertIn('folder1_1', target)
 
     def test_copyfoldertosame2(self):
         root = self.rootFolder
@@ -183,7 +183,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1/folder1_1_1')
         copier = IObjectCopier(source)
         copier.copyTo(target)
-        self.assertTrue('folder1_1_1' in target)
+        self.assertIn('folder1_1_1', target)
 
     def test_copyfolderfromroot(self):
         root = self.rootFolder
@@ -191,7 +191,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1')
         copier = IObjectCopier(source)
         copier.copyTo(target)
-        self.assertTrue('folder1' in target)
+        self.assertIn('folder1', target)
 
     def test_copyfolderfromroot2(self):
         root = self.rootFolder
@@ -199,7 +199,7 @@ class ObjectCopierTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1')
         copier = IObjectCopier(source)
         copier.copyTo(target)
-        self.assertTrue('folder1' in target)
+        self.assertIn('folder1', target)
 
 
 def test_suite():

@@ -107,7 +107,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(container, 'file1')
-        self.assertTrue('file1' in container)
+        self.assertIn('file1', container)
         self.assertEqual(len(container), 2)
 
     def test_movetosamewithnewname(self):
@@ -117,8 +117,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(container, 'file2')
-        self.assertFalse('file1' in container)
-        self.assertTrue('file2' in container)
+        self.assertNotIn('file1', container)
+        self.assertIn('file2', container)
 
     def test_movetoother(self):
         root = self.rootFolder
@@ -128,8 +128,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(target, 'file1')
-        self.assertFalse('file1' in container)
-        self.assertTrue('file1' in target)
+        self.assertNotIn('file1', container)
+        self.assertIn('file1', target)
 
     def test_movetootherwithnewname(self):
         root = self.rootFolder
@@ -139,8 +139,8 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(target, 'file2')
-        self.assertFalse('file1' in container)
-        self.assertTrue('file2' in target)
+        self.assertNotIn('file1', container)
+        self.assertIn('file2', target)
 
     def test_movetootherwithnamecollision(self):
         root = self.rootFolder
@@ -151,9 +151,9 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         file = traverse(root, 'folder1/file1')
         mover = IObjectMover(file)
         mover.moveTo(target, 'file1')
-        self.assertFalse('file1' in container)
-        self.assertTrue('file1' in target)
-        self.assertTrue('file1-2' in target)
+        self.assertNotIn('file1', container)
+        self.assertIn('file1', target)
+        self.assertIn('file1-2', target)
 
     def test_moveable(self):
         root = self.rootFolder
@@ -179,7 +179,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.assertTrue('folder1_1' in target)
+        self.assertIn('folder1_1', target)
 
     def test_movefoldertosame(self):
         # Should be a noop, because "moving" to same location
@@ -188,7 +188,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.assertTrue('folder1_1' in target)
+        self.assertIn('folder1_1', target)
         self.assertEqual(len(target), 1)
 
     def test_movefoldertosame2(self):
@@ -198,7 +198,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1/folder1_1/folder1_1_1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.assertTrue('folder1_1_1' in target)
+        self.assertIn('folder1_1_1', target)
         self.assertEqual(len(target), 1)
 
     def test_movefolderfromroot(self):
@@ -207,7 +207,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.assertTrue('folder1' in target)
+        self.assertIn('folder1', target)
 
     def test_movefolderfromroot2(self):
         root = self.rootFolder
@@ -215,7 +215,7 @@ class ObjectMoverTest(testing.ContainerPlacefulSetup, unittest.TestCase):
         source = traverse(root, '/folder1')
         mover = IObjectMover(source)
         mover.moveTo(target)
-        self.assertTrue('folder1' in target)
+        self.assertIn('folder1', target)
 
 
 def test_suite():
