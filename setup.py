@@ -18,7 +18,6 @@
 ##############################################################################
 import os
 
-from setuptools import find_packages
 from setuptools import setup
 
 
@@ -39,7 +38,7 @@ TESTS_REQUIRE = ZCML_REQUIRES + [
     'zope.dublincore >= 3.8',
     'zope.principalannotation',
     'zope.testing',
-    'zope.testrunner',
+    'zope.testrunner >= 6.4',
     'zope.traversing',
 ]
 
@@ -69,9 +68,6 @@ setup(name='zope.copypastemove',
           'Topic :: Internet :: WWW/HTTP',
           'Framework :: Zope :: 3',
       ],
-      packages=find_packages('src'),
-      package_dir={'': 'src'},
-      namespace_packages=['zope'],
       python_requires='>=3.9',
       extras_require={
           'test': TESTS_REQUIRE,
