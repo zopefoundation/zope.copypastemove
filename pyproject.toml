@@ -7,6 +7,71 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+
+[project]
+name = "zope.copypastemove"
+version = "6.1.dev0"
+description = "Copy, Paste and Move support for content components."
+license = "ZPL-2.1"
+classifiers = [
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Internet :: WWW/HTTP",
+    "Framework :: Zope :: 3",
+]
+dynamic = ["readme"]
+requires-python = ">=3.11"
+authors = [
+    {name = "Zope Foundation and contributors",email = "zope-dev@zope.dev"},
+]
+maintainers = [
+    {name = "Plone Foundation and contributors",email = "zope-dev@zope.dev"},
+]
+dependencies = [
+    "zope.annotation",
+    "zope.component",
+    "zope.container",
+    "zope.copy",
+    "zope.event",
+    "zope.exceptions",
+    "zope.interface",
+    "zope.lifecycleevent",
+    "zope.location",
+]
+
+[project.optional-dependencies]
+test = [
+    "zope.component[zcml]",
+    "zope.configuration",
+    "zope.security[zcml]",
+    "zope.dublincore >= 3.8",
+    "zope.principalannotation",
+    "zope.testing",
+    "zope.testrunner >= 6.4",
+    "zope.traversing",
+]
+zcml = [
+    "zope.component[zcml]",
+    "zope.configuration",
+    "zope.security[zcml]",
+]
+
+[project.urls]
+Source = "http://github.com/zopefoundation/zope.copypastemove"
+Issues = "https://github.com/zopefoundation/zope.copypastemove/issues"
+Changelog = "https://raw.githubusercontent.com/zopefoundation/zope.copypastemove/master/CHANGES.rst"
+
 [tool.coverage.run]
 branch = true
 source = ["zope.copypastemove"]
@@ -29,3 +94,7 @@ exclude_lines = [
 
 [tool.coverage.html]
 directory = "parts/htmlcov"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "CHANGES.rst"]}
+
